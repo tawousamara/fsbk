@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="menu_demande_credit_form" model="website.menu">
+        <field name="name">Demande de financement</field>
+        <field name="url">/funding-request</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">1</field>
+    </record>
+    <template id="create_funding_request" name="Create Request">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="oe_structure">
+                    <div class="container">
+                        <h3 style="margin: 20px">Bienvenu au portail de demande de financement</h3>
+                        <p style="margin: 20px">Veuillez remplir le formulaire pour completez votre demande</p>
+                        <form role="form" action="/create/funding" method="POST" enctype="multipart/form-data"
+                              style="padding: 10px">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="partner_name" class="control-label">Nom de la société</label>
+                                <input type="text" name="partner_name" t-att-value="partner_name" id="partner_name"
+                                       class="form-control" required="required"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="date_creation" class="control-label">Date de création</label>
+                                <input type="date" name="date_creation" t-att-value="date_creation" id="date_creation"
+                                       class="form-control" required="required"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="nrc" class="control-label">N.RC</label>
+                                <input type="text" name="nrc" t-att-value="nrc" id="nrc"
+                                       class="form-control" required="required"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="nif" class="control-label">NIF</label>
+                                <input type="text" name="nif" t-att-value="nif" id="nif"
+                                       class="form-control" required="required"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="nis " class="control-label">NIS</label>
+                                <input type="text" name="nis" t-att-value="nis" id="nis"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="street" class="control-label">Adresse</label>
+                                <input type="text" name="street" t-att-value="street" id="street"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="website" class="control-label">Site web</label>
+                                <input type="text" name="website" t-att-value="" id="website"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="num_compte" class="control-label">N. Compte</label>
+                                <input type="text" name="num_compte" t-att-value="num_compte" id="num_compte"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="branch" class="control-label">Agence</label>
+                                <select name="branch" id="branch" class="form-control link-style" >
+                                    <t t-foreach="branches" t-as="branch">
+                                        <option t-att-value="branch.id">
+                                            <t t-esc="branch.name" t-att-value="branch.id"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="secteur" class="control-label">Secteur d`activité</label>
+                                <select name="secteur" id="secteur" class="form-control link-style" required="required">
+                                    <t t-foreach="secteurs" t-as="secteur">
+                                        <option t-att-value="secteur.id">
+                                            <t t-esc="secteur.name" t-att-value="secteur.id"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="activity" class="control-label">Activité en détails</label>
+                                <select name="activity" id="activity" class="form-control link-style"
+                                        required="required">
+                                    <t t-foreach="activities" t-as="activity">
+                                        <option t-att-value="activity.id">
+                                            <t t-esc="activity.name" t-att-value="activity.id"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="demande_type" class="control-label">Type de demande</label>
+                                <select name="demande_type" id="demande_type" class="form-control link-style"
+                                        required="required">
+                                    <t t-foreach="demandes" t-as="demande">
+                                        <option t-att-value="demande[0]">
+                                            <t t-esc="demande[1]" t-att-value="demande[0]"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="product">Type de ligne de crédit</label>
+                                <select name="product" id="product" class="form-control link-style"
+                                        required="required">
+                                    <t t-foreach="products" t-as="product">
+                                        <option t-att-value="product[0]">
+                                            <t t-esc="product[1]" t-att-value="product[0]"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="montant_sollicite" class="control-label">Montant sollicité</label>
+                                <input type="number" name="montant_sollicite" t-att-value="montant_sollicite"
+                                       required="required"
+                                       id="montant_sollicite"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="contact_name" class="control-label">Représentant légal</label>
+                                <input type="text" name="contact_name" t-att-value="contact_name" id="contact_name"
+                                       required="required"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="phone" class="control-label">N. téléphone</label>
+                                <input type="phone" name="phone" t-att-value="phone" id="phone" required="required"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="email_from" class="control-label">Adresse mail</label>
+                                <input type="email" name="email_from" t-att-value="email_from" id="email_from"
+                                       required="required"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="file_tcr" class="control-label">Attacher TCR N, N-1 (page 1)</label>
+                                <input type="file" name="file_tcr" t-att-value="file_tcr" id="file_tcr"
+                                       required="required"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="file_tcr1" class="control-label">Attacher TCR N, N-1 (page 2)</label>
+                                <input type="file" name="file_tcr1" t-att-value="file_tcr1" id="file_tcr1"
+                                       required="required"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="file_actif" class="control-label">Attacher Actif N, N-1</label>
+                                <input type="file" name="file_actif" t-att-value="file_actif" id="file_actif"
+                                       required="required"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group col-lg-6" style="padding: 10px">
+                                <label for="file_passif" class="control-label">Attacher Passif N, N-1</label>
+                                <input type="file" name="file_passif" t-att-value="file_passif" id="file_passif"
+                                       required="required"
+                                       class="form-control"/>
+                            </div>
+
+                            <div class="clearfix oe_login_buttons">
+                                <button class="btn btn-primary submit pull-left">Envoyer</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <record id="request_thanks" model="website.page">
+        <field name="name">Merci</field>
+        <field name="type">qweb</field>
+        <field name="url">/demande-thank-you</field>
+        <field name="website_published">True</field>
+        <field name="key">crm_portal.request_thanks</field>
+        <field name="arch" type="xml">
+            <t name="thanks" t-name="crm_portal.request_thanks">
+                <t t-call="website.layout">
+                    <div id="wrap">
+                        <div class="container">
+                            <h1>Merci</h1>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="alert alert-success" role="status">
+                                        Votre demande est enregistré avec succès
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+</odoo>

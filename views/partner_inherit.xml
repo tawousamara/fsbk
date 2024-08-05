@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="res_partner_new_client_view">
+        <field name="name">res.partner.new.client</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']" position="before">
+                <page string="Informations" invisible="1">
+                    <group>
+                        <field name="nrc"/>
+                        <field name="nif"/>
+                        <field name="nis"/>
+                        <field name="date_creation"/>
+                        <field name="rib"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

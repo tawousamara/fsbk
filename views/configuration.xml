@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="crm_branch_action" model="ir.actions.act_window">
+        <field name="name">Agences</field>
+        <field name="res_model">crm.branch</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <record id="view_crm_branch_tree" model="ir.ui.view">
+        <field name="name">crm.branch.tree</field>
+        <field name="model">crm.branch</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="wilaya"/>
+            </tree>
+        </field>
+    </record>
+    <record id="crm_secteur_action" model="ir.actions.act_window">
+        <field name="name">Secteurs</field>
+        <field name="res_model">crm.secteur</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <record id="view_crm_secteur_tree" model="ir.ui.view">
+        <field name="name">crm.secteur.tree</field>
+        <field name="model">crm.secteur</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="crm_activity_action" model="ir.actions.act_window">
+        <field name="name">Activité</field>
+        <field name="res_model">crm.activity</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <record id="view_crm_activity_tree" model="ir.ui.view">
+        <field name="name">crm.activity.tree</field>
+        <field name="model">crm.activity</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="crm_product_action" model="ir.actions.act_window">
+        <field name="name">Produit</field>
+        <field name="res_model">crm.product</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <record id="view_crm_product_tree" model="ir.ui.view">
+        <field name="name">crm.product.tree</field>
+        <field name="model">crm.product</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+        <record id="risk_critere_qualitatif_action" model="ir.actions.act_window">
+        <field name="name">Qualitative criteria</field>
+        <field name="res_model">risk.critere.qualitatif</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="view_critere_qualitatif_tree" model="ir.ui.view">
+        <field name="name">risk.critere.qualitatif.tree</field>
+        <field name="model">risk.critere.qualitatif</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_critere_qualitatif_form" model="ir.ui.view">
+        <field name="name">risk.critere.qualitatif.form</field>
+        <field name="model">risk.critere.qualitatif</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="date"/>
+                    </group>
+                    <group>
+                        <field name="original_capital">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="actionnariat">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="forme_jur">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="remp_succession">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="remp_succession">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="competence">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="experience">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="soutien_etatic">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="activite">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="influence_tech">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="anciennete">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="concurrence">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="source_appro">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="produit">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="produit">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="flexibilite">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="sollicitude">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="situation">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="mouvement">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="garanties">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="incident">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="conduite">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="dette_fisc">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="dette_parafisc">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="position_admin">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="source_remb">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                        <field name="part_profil">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="ponderation"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem
+            id="crm_menu_portail"
+            name="Liste portail"
+            parent="crm.crm_menu_config"
+            sequence="25">
+        <menuitem
+            id="crm_menu_branch"
+            name="Liste Agences"
+            sequence="1"
+            action="crm_branch_action"/>
+        <menuitem
+            id="crm_menu_secteur"
+            name="Liste Secteurs"
+            sequence="2"
+            action="crm_secteur_action"/>
+        <menuitem
+            id="crm_menu_activité"
+            name="Liste Activité"
+            sequence="3"
+            action="crm_activity_action"/>
+        <menuitem
+            id="crm_menu_product"
+            name="Liste Ligne de credit"
+            sequence="4"
+            action="crm_product_action"/>
+        <menuitem id="risk_critere_qualitatif_menu"
+                  name="Qualitative criteria"
+                  action="risk_critere_qualitatif_action"
+                  sequence="2"/>
+
+    </menuitem>
+</odoo>

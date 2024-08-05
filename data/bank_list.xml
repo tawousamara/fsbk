@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="001" model="crm.banque">
+            <field name="name">BNA</field>
+            <field name="code">001</field>
+        </record>
+        <record id="002" model="crm.banque">
+            <field name="name">BEA</field>
+            <field name="code">002</field>
+
+        </record>
+        <record id="003" model="crm.banque">
+            <field name="name">BADR</field>
+            <field name="code">003</field>
+
+        </record>
+        <record id="004" model="crm.banque">
+            <field name="name">CPA</field>
+            <field name="code">004</field>
+
+        </record>
+        <record id="005" model="crm.banque">
+            <field name="name">BDL</field>
+            <field name="code">005</field>
+
+        </record>
+        <record id="006" model="crm.banque">
+            <field name="name">Al Baraka Bank</field>
+            <field name="code">006</field>
+
+        </record>
+
+        <record id="011" model="crm.banque">
+            <field name="name">CNEP Banque</field>
+            <field name="code">011</field>
+        </record>
+        <record id="012" model="crm.banque">
+            <field name="name">CITIBANK Algérie</field>
+            <field name="code">012</field>
+        </record>
+        <record id="020" model="crm.banque">
+            <field name="name">Natixis Algérie</field>
+            <field name="code">020</field>
+        </record>
+        <record id="021" model="crm.banque">
+            <field name="name">Société Générale Algérie</field>
+            <field name="code">021</field>
+        </record>
+        <record id="026" model="crm.banque">
+            <field name="name">Arab Bank Algeria</field>
+            <field name="code">026</field>
+
+        </record>
+        <record id="027" model="crm.banque">
+            <field name="name">BNP Paribas El Djazaïr</field>
+            <field name="code">027</field>
+
+        </record>
+        <record id="029" model="crm.banque">
+            <field name="name">Trust Bank Algeria</field>
+            <field name="code">029</field>
+
+        </record>
+        <record id="031" model="crm.banque">
+            <field name="name">Housing Bank Algeria</field>
+            <field name="code">031</field>
+
+        </record>
+        <record id="032" model="crm.banque">
+            <field name="name">Algeria Gulf Bank</field>
+            <field name="code">032</field>
+
+        </record>
+        <record id="035" model="crm.banque">
+            <field name="name">FRANSABANK El Djazaïr</field>
+            <field name="code">035</field>
+
+        </record>
+        <record id="037" model="crm.banque">
+            <field name="name">HSBC Algérie</field>
+            <field name="code">037</field>
+
+        </record>
+        <record id="038" model="crm.banque">
+            <field name="name">Al Salam Bank Algeria</field>
+            <field name="code">038</field>
+        </record>
+        <record id="039" model="crm.banque">
+            <field name="name">ALC</field>
+            <field name="code"></field>
+        </record>
+        <record id="040" model="crm.banque">
+            <field name="name">SNL</field>
+            <field name="code"></field>
+        </record>
+        <record id="041" model="crm.banque">
+            <field name="name">MLA</field>
+            <field name="code"></field>
+        </record>
+        <record id="042" model="crm.banque">
+            <field name="name">FINALEP</field>
+            <field name="code"></field>
+        </record>
+        <record id="043" model="crm.banque">
+            <field name="name">ICOSIA</field>
+            <field name="code"></field>
+        </record>
+        <record id="044" model="crm.banque">
+            <field name="name">AFRIC INVEST</field>
+            <field name="code"></field>
+        </record>
+        <record id="045" model="crm.banque">
+            <field name="name">DJZAIR ISTITHMAR</field>
+            <field name="code"></field>
+        </record>
+        <record id="046" model="crm.banque">
+            <field name="name">ASF</field>
+            <field name="code"></field>
+        </record>
+        <record id="047" model="crm.banque">
+            <field name="name">SEAF</field>
+            <field name="code"></field>
+        </record>
+        <record id="fin_bank_4" model="crm.credit">
+            <field name="name">Découvert Mobilisable</field>
+        </record>
+        <record id="fin_bank_5" model="crm.credit">
+            <field name="name">SPOT Pré/Refinancement</field>
+        </record>
+        <record id="fin_bank_6" model="crm.credit">
+            <field name="name">CMT</field>
+        </record>
+        <record id="fin_bank_7" model="crm.credit">
+            <field name="name">Financement Douane</field>
+        </record>
+        <record id="fin_bank8" model="crm.credit">
+            <field name="name">LC</field>
+        </record>
+        <record id="fin_bank9" model="crm.credit">
+            <field name="name">AS Marché</field>
+        </record>
+        <record id="fin_bank10" model="crm.credit">
+            <field name="name">Caution Marché</field>
+        </record>
+        <record id="fin_bank11" model="crm.credit">
+            <field name="name">Lease Back</field>
+        </record>
+        <record id="fin_bank12" model="crm.credit">
+            <field name="name">Financement Saisonière</field>
+        </record>
+        <record id="payment_mode_1" model="crm.payment.mode">
+            <field name="name">LC à vue</field>
+        </record>
+        <record id="payment_mode_2" model="crm.payment.mode">
+            <field name="name">LC à DP</field>
+        </record>
+        <record id="payment_mode_3" model="crm.payment.mode">
+            <field name="name">REMDOC à vue</field>
+        </record>
+        <record id="payment_mode_4" model="crm.payment.mode">
+            <field name="name">REMDOC à DP</field>
+        </record>
+        <record id="payment_mode_5" model="crm.payment.mode">
+            <field name="name">Transfert libre</field>
+        </record>
+        <record id="payment_1" model="crm.type.payment">
+            <field name="name">Cheque</field>
+        </record>
+        <record id="payment_2" model="crm.type.payment">
+            <field name="name">Transfert</field>
+        </record>
+        <record id="payment_3" model="crm.type.payment">
+            <field name="name">Cash</field>
+        </record>
+        <record id="payment_4" model="crm.type.payment">
+            <field name="name">Lettre de crédit</field>
+        </record>
+        <record id="payment_5" model="crm.type.payment">
+            <field name="name">Factures de recouvrement</field>
+        </record>
+        <record id="marche_1" model="crm.type.marche">
+            <field name="name">En cours de soumission</field>
+        </record>
+        <record id="marche_2" model="crm.type.marche">
+            <field name="name">Soumissionné</field>
+        </record>
+        <record id="marche_3" model="crm.type.marche">
+            <field name="name">Attribué</field>
+        </record>
+        <record id="marche_4" model="crm.type.marche">
+            <field name="name">En cours de signature</field>
+        </record>
+        <record id="marche_5" model="crm.type.marche">
+            <field name="name">Signé</field>
+        </record>
+        <record id="marche_6" model="crm.type.marche">
+            <field name="name">En cours de réalisation</field>
+        </record>
+        <record id="fin_1" model="crm.type.financement">
+            <field name="name">Financement de l`exploitation</field>
+        </record>
+        <record id="fin_2" model="crm.type.financement">
+            <field name="name">Financement d`investissement</field>
+        </record>
+        <record id="fin_3" model="crm.type.financement">
+            <field name="name">Leasing matériel roulant</field>
+        </record>
+        <record id="fin_4" model="crm.type.financement">
+            <field name="name">Leasing immobilier</field>
+        </record>
+        <record id="fin_5" model="crm.type.financement">
+            <field name="name">Leasing autres matériels</field>
+        </record>
+    </data>
+</odoo>
