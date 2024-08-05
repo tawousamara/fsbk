@@ -80,6 +80,7 @@ class Lead(models.Model):
     has_appro = fields.Boolean(string='Approvisionnement auprès du marché local')
     appro_ids = fields.One2many('crm.appro', 'lead_id')
     plan_ids = fields.One2many('crm.plan', 'lead_id')
+    financement_ids = fields.One2many('crm.financement', 'lead_id')
     document_ids = fields.One2many('ir.attachment', 'lead_id')
 
     garanties = fields.Html(string='Garanties proposées')
@@ -201,72 +202,21 @@ class Lead(models.Model):
             rec.visualisation = base64.b64encode(buf.getvalue())
             buf.close()
 
-
-    def calcul_scoring(self):
+    def open_crv(self):
         for rec in self:
-            all_valid = True
-            if not rec.original_capital:
-                all_valid = False
-            elif not rec.actionnariat:
-                all_valid = False
-            elif not rec.forme_jur:
-                all_valid = False
-            elif not rec.remp_succession:
-                all_valid = False
-            elif not rec.competence:
-                all_valid = False
-            elif not rec.experience:
-                all_valid = False
-            elif not rec.soutien_etatic:
-                all_valid = False
-            elif not rec.activite:
-                all_valid = False
-            elif not rec.influence_tech:
-                all_valid = False
-            elif not rec.anciennete:
-                all_valid = False
-            elif not rec.concurrence:
-                all_valid = False
-            elif not rec.source_appro:
-                all_valid = False
-            elif not rec.produit:
-                all_valid = False
-            elif not rec.flexibilite:
-                all_valid = False
-            elif not rec.sollicitude:
-                all_valid = False
-            elif not rec.situation:
-                all_valid = False
-            elif not rec.mouvement:
-                all_valid = False
-            elif not rec.garanties:
-                all_valid = False
-            elif not rec.incident:
-                all_valid = False
-            elif not rec.conduite:
-                all_valid = False
-            elif not rec.dette_fisc:
-                all_valid = False
-            elif not rec.source_remb:
-                all_valid = False
-            elif not rec.part_profil:
-                all_valid = False
-            if not all_valid:
-                UserError('Vous devriez remplir tout les critères')
-            if all_valid:
-                result_qual = rec.original_capital.ponderation + rec.actionnariat.ponderation + \
-                          rec.forme_jur.ponderation + rec.remp_succession.ponderation + \
-                          rec.competence.ponderation + rec.experience.ponderation + \
-                          rec.soutien_etatic.ponderation + rec.activite.ponderation + \
-                          rec.influence_tech.ponderation + rec.anciennete.ponderation + \
-                          rec.concurrence.ponderation + rec.source_appro.ponderation + \
-                          rec.produit.ponderation + rec.flexibilite.ponderation + \
-                          rec.sollicitude.ponderation + rec.situation.ponderation + \
-                          rec.mouvement.ponderation + rec.garanties.ponderation + \
-                          rec.incident.ponderation + rec.conduite.ponderation + \
-                          rec.dette_fisc.ponderation + rec.source_remb.ponderation + \
-                          rec.part_profil.ponderation
-                rec.resultat = result_qual
+            view_id = self.env.ref('crm_portal.compte_rendu_views_wizard_form').id
+            res_id = self.env['crm.compte.rendu'].search([('lead_id', '=', rec.id)])
+            if not res_id:
+                res_id = self.env['crm.compte.rendu'].create({'lead_id': rec.id})
+            return {
+                'name': 'Compte rendu de visite',
+                'type': 'ir.actions.act_window',
+                'view_mode': 'form',
+                'res_model': 'crm.compte.rendu',
+                'res_id': res_id.id,
+                'view_id': view_id,
+                'target': 'new',
+            }
 
 class Ratio(models.Model):
     _name = 'crm.ratio'
@@ -276,3 +226,12 @@ class Ratio(models.Model):
     montant_n = fields.Float(string='N')
     montant_n1 = fields.Float(string='N-1')
     lead = fields.Many2one('crm.lead')
+
+class Compterendu(models.Model):
+    _name = 'crm.compte.rendu'
+
+    lead_id = fields.Many2one('crm.lead')
+    visit_date = fields.Date(string='Date de la visite')
+    address = fields.Char(string='Adresse')
+    participant_ids = fields.Many2many('res.users', string='Personnes ayant effectuées la visite')
+    resume = fields.Text(string='Résumé')

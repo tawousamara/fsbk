@@ -103,3 +103,4 @@ access_crm_appro_financial,access.crm.appro,model_crm_appro,,1,1,1,1
 access_crm_plan_financial,access.crm.plan,model_crm_plan,,1,1,1,1
 access_crm_financement_financial,access.crm.financement,model_crm_financement,,1,1,1,1
 
+access_crm_compte_rendu,access.crm.compte.rendu,model_crm_compte_rendu,,1,1,1,1

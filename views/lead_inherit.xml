@@ -12,8 +12,20 @@
                 <button name="convert_dossier" string="Lancer le dossier" type="object" class="oe_highlight"
                         invisible="type != 'opportunity'"/>
             </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="string">Chargé d'Affaire</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="string">Chargé d'Affaire</attribute>
+            </xpath>
             <xpath expr="//page[@name='extra']" position="attributes">
                 <attribute name="string">Infos Globales</attribute>
+            </xpath>
+            <xpath expr="//button[@name='%(crm.crm_lead_lost_action)d']" position="attributes">
+                <attribute name="string">Rejeter</attribute>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="open_crv" type="object" class="oe_stat_button" string="Renseigner le CRV"/>
             </xpath>
             <xpath expr="//page[@name='lead']" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -26,8 +38,6 @@
                         <field name="nif"/>
                         <field name="nis"/>
                         <field name="rib"/>
-                        <field name="product"/>
-                        <field name="product_ids" widget="many2many_tags"/>
                     </group>
                     <group>
                         <field name="branch"/>
@@ -129,6 +139,22 @@
                     </group>
                 </page>
             </xpath>
+        </field>
+    </record>
+    <record id="compte_rendu_views_wizard_form" model="ir.ui.view">
+        <field name="name">crm.compte.rendu.wizard.form</field>
+        <field name="model">crm.compte.rendu</field>
+        <field name="arch" type="xml">
+            <form string="Compte rendu de visite">
+                <sheet>
+                    <group>
+                            <field name="visit_date"/>
+                            <field name="address"/>
+                            <field name="participant_ids" widget="many2many_tags"/>
+                            <field name="resume"/>
+                    </group>
+                </sheet>
+            </form>
         </field>
     </record>
 </odoo>
