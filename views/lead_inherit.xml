@@ -4,16 +4,13 @@
         <field name="name">crm.lead.new.client</field>
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
-        <group name="arch" type="xml">
+        <field name="arch" type="xml">
             <xpath expr="//field[@name='expected_revenue']" position="attributes">
                 <attribute name="string">PNB espéré</attribute>
             </xpath>
             <xpath expr="//header" position="inside">
                 <button name="convert_dossier" string="Lancer le dossier" type="object" class="oe_highlight"
                         invisible="type != 'opportunity'"/>
-            </xpath>
-            <xpath expr="//page[@name='extra']" position="attributes">
-                <attribute name="string">Infos Globales</attribute>
             </xpath>
             <xpath expr="//page[@name='extra']" position="attributes">
                 <attribute name="string">Infos Globales</attribute>
@@ -87,7 +84,7 @@
                         </tree>
                     </field>
                 </page>
-                <page name="plan" string="Plan d`Appro. Local">
+                <page name="plan" string="Plan des charges">
                     <field name="plan_ids">
                         <tree  editable="bottom">
                             <field name="type_marche"/>
@@ -106,7 +103,7 @@
                         </tree>
                     </field>
                 </page>
-                <page name="financement" invisible="demande_type == '1'" string="Financement sollicité">
+                <page name="financement_0" invisible="demande_type == '1'" string="Financement sollicité">
                     <field name="financement_ids">
                         <tree  editable="bottom">
                             <field name="type_fin"/>
@@ -118,7 +115,7 @@
                         <field name="garanties"/>
                     </group>
                 </page>
-                <page name="financement" invisible="demande_type == '0'" string="Financement sollicité">
+                <page name="financement_1" invisible="demande_type == '0'" string="Financement sollicité">
                     <field name="financement_ids">
                         <tree  editable="bottom">
                             <field name="type_fin"/>
@@ -132,6 +129,6 @@
                     </group>
                 </page>
             </xpath>
-        </group>
+        </field>
     </record>
 </odoo>

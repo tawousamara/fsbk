@@ -632,7 +632,7 @@
                                         </button>
                                     </div>
                                     <t t-set="financement_ids" t-value="financement_ids"/>
-                                    <table id="financement_table" class="table" t-if="financement_ids">
+                                    <table id="financement_1_table" class="table" t-if="financement_ids">
                                         <thead>
                                             <tr>
                                                 <th>
