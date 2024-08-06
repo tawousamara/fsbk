@@ -134,7 +134,7 @@ class CreditReq(http.Controller):
                 post.pop('step')
                 post.pop('opportunity_id')
                 post['name'] = post['partner_name']
-                if post['dmeande_type'] == '1':
+                if post['demande_type'] == '1':
                     post['name'] = 'Renouvellement ' + post['partner_name']
                     post['type'] = 'opportunity'
                 opportunity = request.env['crm.lead'].create(post)
@@ -285,9 +285,12 @@ class CreditReq(http.Controller):
         apropos_line = request.env['crm.plan'].create(vals)
         opportunity = request.env['crm.lead'].browse(int(opportunity_id))
         return request.redirect('/credit-request?opportunity_id=%d&step=%s' % (opportunity_id, opportunity.stage))
+    
+
+
 
     @http.route('/create/financement', type='http', auth='user', methods=['POST'], website=True, csrf=True)
-    def create_plan(self, **post):
+    def create_financement(self, **post):
         # Handle form submission and move to the next step
         opportunity_id = int(post.get('opportunity_id', 0))
         step = post.get('step', 'step1')
@@ -298,6 +301,109 @@ class CreditReq(http.Controller):
         apropos_line = request.env['crm.financement'].create(vals)
         opportunity = request.env['crm.lead'].browse(int(opportunity_id))
         return request.redirect('/credit-request?opportunity_id=%d&step=%s' % (opportunity_id, opportunity.stage))
+    
+
+
+    @http.route('/delete_imp', type='http', auth='user', website=True, methods=['POST'], csrf=True)
+    def delete_confrere(self, **post):
+       
+        _logger.info('----------here-----------------')
+        
+        return request.redirect('/credit-request')
+    
+
+    @http.route('/delete/confrere', type='http', auth='user', website=True, methods=['POST'], csrf=True)
+    def delete_confrere(self, **post):
+        _logger.info('access done')
+        confrere_id = post.get('confrere_id')
+        opportunity_id = int(post.get('opportunity_id'))
+        opportunity = request.env['crm.lead'].browse(opportunity_id)
+
+        _logger.info(confrere_id)
+        step = post.get('step')
+        
+        try:
+            confrere = request.env['crm.confrere'].browse(int(confrere_id))
+            if confrere.exists():
+                confrere.unlink()
+            return request.redirect('/credit-request?opportunity_id=%d&step=%s' % (opportunity_id, opportunity.stage))
+        except Exception as e:
+            _logger.error("Erreur lors de la suppression du confrere: %s", str(e))
+            return request.redirect('/credit-request?opportunity_id=%d&step=%s&error=delete_failed' % (opportunity_id, step))
+        
+
+    @http.route('/delete_importation', type='http', auth='user', website=True, methods=['POST'], csrf=True)
+    def delete_importation(self, **post):
+        _logger.info('Suppression importation accédée')
+        importation_id = post.get('importation_id')
+        opportunity_id = int(post.get('opportunity_id'))
+        opportunity = request.env['crm.lead'].browse(opportunity_id)
+
+        _logger.info(f"ID Importation à supprimer: {importation_id}")
+        step = post.get('step')
+        
+        try:
+            importation = request.env['crm.importation'].browse(int(importation_id))
+            if importation.exists():
+                importation.unlink()
+            return request.redirect('/credit-request?opportunity_id=%d&step=%s' % (opportunity_id, opportunity.stage))
+        except Exception as e:
+            _logger.error(f"Erreur lors de la suppression de l'importation: {str(e)}")
+            return request.redirect('/credit-request?opportunity_id=%d&step=%s&error=delete_failed' % (opportunity_id, step))
+
+    @http.route('/delete_appro', type='http', auth='user', website=True, methods=['POST'], csrf=True)
+    def delete_appro(self, **post):
+        appro_id = post.get('appro_id')
+        opportunity_id = int(post.get('opportunity_id'))
+        opportunity = request.env['crm.lead'].browse(opportunity_id)
+        step = post.get('step')
+        
+        try:
+            appro = request.env['crm.appro'].browse(int(appro_id))
+            if appro.exists():
+                appro.unlink()
+            return request.redirect('/credit-request?opportunity_id=%d&step=%s' % (opportunity_id, opportunity.stage))
+        except Exception as e:
+            _logger.error(f"Erreur lors de la suppression de l'approvisionnement: {str(e)}")
+            return request.redirect('/credit-request?opportunity_id=%d&step=%s&error=delete_failed' % (opportunity_id, step))
+
+
+    @http.route('/delete_plan', type='http', auth='user', website=True, methods=['POST'], csrf=True)
+    def delete_plan(self, **post):
+        plan_id = post.get('plan_id')
+        opportunity_id = int(post.get('opportunity_id'))
+        opportunity = request.env['crm.lead'].browse(opportunity_id)
+        step = post.get('step')
+        
+        try:
+            plan = request.env['crm.plan'].browse(int(plan_id))
+            if plan.exists():
+                plan.unlink()
+            return request.redirect('/credit-request?opportunity_id=%d&step=%s' % (opportunity_id, opportunity.stage))
+        except Exception as e:
+            _logger.error(f"Erreur lors de la suppression du plan: {str(e)}")
+            return request.redirect('/credit-request?opportunity_id=%d&step=%s&error=delete_failed' % (opportunity_id, step))
+
+    @http.route('/delete_financement', type='http', auth='user', website=True, methods=['POST'], csrf=True)
+    def delete_financement(self, **post):
+        _logger.info("Route /delete_financement appelée avec post: %s", post)
+        financement_id = post.get('financement_id')
+        opportunity_id = int(post.get('opportunity_id'))
+        opportunity = request.env['crm.lead'].browse(opportunity_id)
+        step = post.get('step')
+        
+        try:
+            financement = request.env['crm.financement'].browse(int(financement_id))
+            if financement.exists():
+                financement.unlink()
+            return request.redirect('/credit-request?opportunity_id=%d&step=%s' % (opportunity_id, opportunity.stage))
+        except Exception as e:
+            _logger.error(f"Erreur lors de la suppression du financement: {str(e)}")
+            return request.redirect('/credit-request?opportunity_id=%d&step=%s&error=delete_failed' % (opportunity_id, step))
+
+    
+
+    
 
 def create_random_password():
     characters = string.ascii_letters + string.digits
