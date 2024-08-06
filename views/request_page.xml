@@ -232,6 +232,20 @@
                                                         </span>
                                                     </td>
                                                     <td>
+                                                    <form role="form" action="/delete_confrere" method="POST" class="delete-confrere-form" style="display: none;">
+                                                        <button type="submit" class="btn btn-secondary" style="display: none;">Modifier</button>
+                                                    </form>
+                                                    </td>
+                                                    <td>
+                                                   <form role="form" action="/delete/confrere" method="POST" enctype="multipart/form-data"
+                                                        style="padding: 10px">
+                                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                        <input type="hidden" name="opportunity_id" t-att-value="opportunity_id"/>
+                                                        <input type="hidden" name="step" t-att-value="step"/>
+                                                        <input type="hidden" name="confrere_id" t-att-value="confrere_id.id"/>
+                                                            
+                                                        <button type="submit" class="btn btn-secondary" >Supprimer</button>
+                                                    </form>
                                                     </td>
                                                 </tr>
                                             </t>
@@ -331,7 +345,18 @@
                                                         </span>
                                                     </td>
                                                     <td>
+                                                    <form role="form" action="/delete_confrere" method="POST" class="delete-confrere-form" >
+                                                        <button type="submit" class="btn btn-secondary" style="display: none;">Modifier</button>
+                                                    </form>
                                                     </td>
+                                                    <td>
+                                                        <form role="form" action="/delete_importation" method="POST" class="delete-importation-form">
+                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" name="opportunity_id" t-att-value="opportunity_id"/>
+                                                            <input type="hidden" name="importation_id" t-att-value="importation_id.id"/>
+                                                            <input type="hidden" name="step" t-att-value="step"/>
+                                                            <button type="submit" class="btn btn-secondary">Supprimer</button>
+                                                        </form></td>
                                                 </tr>
                                             </t>
                                         </tbody>
@@ -421,6 +446,19 @@
                                                         </span>
                                                     </td>
                                                     <td>
+                                                    <form role="form" action="/delete_confrere" method="POST" class="delete-confrere-form" style="display: none;">
+                                                        <button type="submit" class="btn btn-secondary" style="display: none;">Modifier</button>
+                                                    </form>
+                                                    </td>
+                                                    <td>
+                                                    <form role="form" action="/delete_appro" method="POST" class="delete-appro-form">
+                                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                        <input type="hidden" name="opportunity_id" t-att-value="opportunity_id"/>
+                                                        <input type="hidden" name="appro_id" t-att-value="appro_id.id"/>
+                                                        <input type="hidden" name="step" t-att-value="step"/>
+                                                        <button type="submit" class="btn btn-secondary">Supprimer</button>
+                                                    </form>
+
                                                     </td>
                                                 </tr>
                                             </t>
@@ -546,6 +584,18 @@
                                                         </span>
                                                     </td>
                                                     <td>
+                                                    <form role="form" action="/delete_confrere" method="POST" class="delete-confrere-form" style="display: none;">
+                                                        <button type="submit" class="btn btn-secondary" style="display: none;">Modifier</button>
+                                                    </form>
+                                                    </td>
+                                                    <td>
+                                                        <form role="form" action="/delete_plan" method="POST" class="delete-plan-form">
+                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" name="opportunity_id" t-att-value="opportunity_id"/>
+                                                            <input type="hidden" name="plan_id" t-att-value="plan_id.id"/>
+                                                            <input type="hidden" name="step" t-att-value="step"/>
+                                                            <button type="submit" class="btn btn-secondary">Supprimer</button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             </t>
@@ -591,6 +641,18 @@
                                                         </span>
                                                     </td>
                                                     <td>
+                                                    <form role="form" action="/delete_confrere" method="POST" class="delete-confrere-form">
+                                                        <button type="submit" class="btn btn-secondary" style="display: none;">Modifier</button>
+                                                    </form>
+                                                    </td>
+                                                    <td>
+                                                    <form role="form" action="/delete_financement" method="POST" class="delete-financement-form">
+                                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                        <input type="hidden" name="opportunity_id" t-att-value="opportunity_id"/>
+                                                        <input type="hidden" name="financement_id" t-att-value="financement_id.id"/>
+                                                        <input type="hidden" name="step" t-att-value="step"/>
+                                                        <button type="submit" class="btn btn-secondary">Supprimer</button>
+                                                    </form>
                                                     </td>
                                                 </tr>
                                             </t>
@@ -603,7 +665,7 @@
                                         <textarea id="garanties" name="garanties" t-att-value="garanties"
                                                   class="comment-box form-group" rows="5"
                                                   style="width: 100%; height: 200px;"
-                                                  required="required"/>
+                                                  />
                                     </div>
                                 </t>
                                 <t t-else="">
@@ -685,7 +747,7 @@
                                         <textarea id="garanties" name="garanties"
                                                   class="comment-box form-group" rows="5"
                                                   style="width: 100%; height: 200px;"
-                                                  required="required"/>
+                                                  />
                                     </div>
                                     <div class="form-group col-lg-6" style="padding: 10px;">
                                         <label for="has_confrere" class="control-label">Avez-vous des crédit bancaire
@@ -820,6 +882,7 @@
                                                     Délais de livraison (entre le lancement de la commande et le
                                                     dédouanement de la marchandise) en jours
                                                 </th>
+                                               <th></th>
                                             </tr>
                                         </thead>
                                         <tbody id="importation">
@@ -864,8 +927,7 @@
                                                             <t t-esc="importation_id.delai_livraison"/>
                                                         </span>
                                                     </td>
-                                                    <td>
-                                                    </td>
+                                                    
                                                 </tr>
                                             </t>
                                         </tbody>
