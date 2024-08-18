@@ -12,20 +12,43 @@
                 <button name="convert_dossier" string="Lancer le dossier" type="object" class="oe_highlight"
                         invisible="type != 'opportunity'"/>
             </xpath>
-            <xpath expr="//field[@name='user_id']" position="attributes">
-                <attribute name="string">Chargé d'Affaire</attribute>
+            <xpath expr="//div[@id='probability']" position="after">
+                <button name="open_calcul_mecanisme" string="Calculer le PNB espéré" type="object"
+                        class="oe_highlight"/>
             </xpath>
-            <xpath expr="//field[@name='user_id']" position="attributes">
-                <attribute name="string">Chargé d'Affaire</attribute>
+            <xpath expr="//notebook" position="before">
+                <group>
+                    <field name="demande_type"/>
+                    <field name="representant"/>
+                    <field name="forme_jur"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//group[field[@name='user_id']][1]/field[@name='user_id']" position="attributes">
+                <attribute name="string">Chargé d'affaire</attribute>
+            </xpath>
+
+            <!-- Pour le deuxième groupe (opportunity) -->
+            <xpath expr="//group[field[@name='user_id']][2]/field[@name='user_id']" position="attributes">
+                <attribute name="string">Chargé d'affaire</attribute>
             </xpath>
             <xpath expr="//page[@name='extra']" position="attributes">
                 <attribute name="string">Infos Globales</attribute>
+                <attribute name="invisible">0</attribute>
             </xpath>
             <xpath expr="//button[@name='%(crm.crm_lead_lost_action)d']" position="attributes">
                 <attribute name="string">Rejeter</attribute>
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
-                <button name="open_crv" type="object" class="oe_stat_button" string="Renseigner le CRV"/>
+                <button name="open_crv" type="object" class="oe_stat_button">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">
+                            <strong>
+                                <field name="crv_nbr"/>
+                            </strong>
+                        </span>
+                    </div>
+                </button>
             </xpath>
             <xpath expr="//page[@name='lead']" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -34,17 +57,19 @@
                 <group>
                     <group>
                         <field name="date_creation"/>
+                        <field name="date_debut"/>
                         <field name="nrc"/>
                         <field name="nif"/>
                         <field name="nis"/>
-                        <field name="rib"/>
+                        <field name="nbr_employees"/>
+                        <field name="company_description"/>
                     </group>
                     <group>
                         <field name="branch"/>
+                        <field name="has_account"/>
                         <field name="num_compte"/>
                         <field name="secteur"/>
                         <field name="activity"/>
-                        <field name="demande_type"/>
                     </group>
                 </group>
             </xpath>
@@ -57,9 +82,19 @@
                         </tree>
                     </field>
                 </page>
-                <page name="confreres" string="Engagaments auprès des confrères">
+                <page name="confreres" string="Engagaments auprès des confrères" invisible="has_confrere">
+                    <field name="has_confrere" invisible="1"/>
+                    <group>
+                        <field name="confrere_file"/>
+                        <button name="upload_confrere" invisible="confrere_file == False" string="Uploader les données"
+                                type="object"
+                                class="oe_highlight"/>
+                        <button name="download_confrere" invisible="confrere_ids == False"
+                                string="Telecharger les données" type="object"
+                                class="oe_highlight"/>
+                    </group>
                     <field name="confrere_ids">
-                        <tree  editable="bottom">
+                        <tree editable="bottom">
                             <field name="banque"/>
                             <field name="credit"/>
                             <field name="montant"/>
@@ -69,12 +104,22 @@
                         </tree>
                     </field>
                 </page>
-                <page name="importation" string="Planning d'importation">
+                <page name="importation" string="Planning d'importation" invisible="has_importation">
+                    <field name="has_importation" invisible="1"/>
+                    <group>
+                        <field name="importation_file"/>
+                        <button name="upload_importation" invisible="importation_file == False"
+                                string="Uploader les données" type="object"
+                                class="oe_highlight"/>
+                        <button name="download_importation" invisible="importation_ids == False"
+                                string="Telecharger les données" type="object"
+                                class="oe_highlight"/>
+                    </group>
                     <field name="importation_ids">
-                        <tree  editable="bottom">
+                        <tree editable="bottom">
                             <field name="fournisseur"/>
                             <field name="pays"/>
-                            <field name="payment"/>
+                            <field name="payment" widget="many2many_tags"/>
                             <field name="delai"/>
                             <field name="montant"/>
                             <field name="programme_importation"/>
@@ -82,12 +127,22 @@
                         </tree>
                     </field>
                 </page>
-                <page name="appro" string="Plan d`Appro. Local">
+                <page name="appro" string="Plan d`Appro. Local" invisible="has_appro">
+                    <field name="has_appro" invisible="1"/>
+                    <group>
+                        <field name="appro_file"/>
+                        <button name="upload_appro" invisible="appro_file == False" string="Uploader les données"
+                                type="object"
+                                class="oe_highlight"/>
+                        <button name="download_appro" invisible="appro_ids == False" string="Telecharger les données"
+                                type="object"
+                                class="oe_highlight"/>
+                    </group>
                     <field name="appro_ids">
-                        <tree  editable="bottom">
+                        <tree editable="bottom">
                             <field name="marchandise"/>
                             <field name="fournisseur"/>
-                            <field name="payment"/>
+                            <field name="payment" widget="many2many_tags"/>
                             <field name="delai"/>
                             <field name="montant"/>
                             <field name="programme_importation"/>
@@ -95,28 +150,38 @@
                     </field>
                 </page>
                 <page name="plan" string="Plan des charges">
+                    <group>
+                        <field name="plan_file"/>
+                        <button name="upload_plan" invisible="plan_file == False" string="Uploader les données"
+                                type="object"
+                                class="oe_highlight"/>
+                        <button name="download_plan" invisible="plan_ids == False" string="Telecharger les données"
+                                type="object"
+                                class="oe_highlight"/>
+                    </group>
                     <field name="plan_ids">
-                        <tree  editable="bottom">
+                        <tree editable="bottom">
                             <field name="type_marche"/>
                             <field name="client"/>
                             <field name="dom_bancaire"/>
                             <field name="natissement"/>
                             <field name="montant"/>
                             <field name="objet"/>
-                            <field name="date_obs"/>
-                            <field name="delai"/>
-                            <field name="taux"/>
-                            <field name="montant_facture"/>
-                            <field name="montant_encaisse"/>
-                            <field name="montant_fact_no_encaisse"/>
-                            <field name="montant_no_fact_realise"/>
+                            <field name="date_obs" optional="hide"/>
+                            <field name="delai" optional="hide"/>
+                            <field name="taux" optional="hide"/>
+                            <field name="montant_facture" optional="hide"/>
+                            <field name="montant_encaisse" optional="hide"/>
+                            <field name="montant_fact_no_encaisse" optional="hide"/>
+                            <field name="montant_no_fact_realise" optional="hide"/>
                         </tree>
                     </field>
                 </page>
-                <page name="financement_0" invisible="demande_type == '1'" string="Financement sollicité">
+                <page name="financement_0" invisible="demande_type != '0'" string="Financement sollicité (EER)">
                     <field name="financement_ids">
-                        <tree  editable="bottom">
+                        <tree editable="bottom">
                             <field name="type_fin"/>
+                            <field name="line"/>
                             <field name="montant"/>
                             <field name="utilisation"/>
                         </tree>
@@ -125,10 +190,12 @@
                         <field name="garanties"/>
                     </group>
                 </page>
-                <page name="financement_1" invisible="demande_type == '0'" string="Financement sollicité">
+                <page name="financement_1" invisible="demande_type != '1'"
+                      string="Financement sollicité (Renouvellement)">
                     <field name="financement_ids">
-                        <tree  editable="bottom">
+                        <tree editable="bottom">
                             <field name="type_fin"/>
+                            <field name="line"/>
                             <field name="autorisation_actuel"/>
                             <field name="validite"/>
                             <field name="new_plafond"/>
@@ -136,6 +203,22 @@
                     </field>
                     <group>
                         <field name="garanties"/>
+                    </group>
+                </page>
+                <page name="kyc" string="Etude Client">
+                    <group>
+                        <field name="demande_description"/>
+                        <field name="activity_description"/>
+                        <field name="product_service"/>
+                        <field name="client_market"/>
+                        <field name="concurrent"/>
+                        <field name="cycle_expoitation"/>
+                    </group>
+                </page>
+                <page name="kyc" string="Avis">
+                    <group>
+                        <field name="avis_ca"/>
+                        <field name="avis_dmc"/>
                     </group>
                 </page>
             </xpath>
@@ -148,10 +231,10 @@
             <form string="Compte rendu de visite">
                 <sheet>
                     <group>
-                            <field name="visit_date"/>
-                            <field name="address"/>
-                            <field name="participant_ids" widget="many2many_tags"/>
-                            <field name="resume"/>
+                        <field name="visit_date"/>
+                        <field name="address"/>
+                        <field name="participant_ids" widget="many2many_tags"/>
+                        <field name="resume"/>
                     </group>
                 </sheet>
             </form>

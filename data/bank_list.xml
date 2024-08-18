@@ -168,16 +168,10 @@
             <field name="name">Cheque</field>
         </record>
         <record id="payment_2" model="crm.type.payment">
-            <field name="name">Transfert</field>
+            <field name="name">Virement</field>
         </record>
         <record id="payment_3" model="crm.type.payment">
             <field name="name">Cash</field>
-        </record>
-        <record id="payment_4" model="crm.type.payment">
-            <field name="name">Lettre de crédit</field>
-        </record>
-        <record id="payment_5" model="crm.type.payment">
-            <field name="name">Factures de recouvrement</field>
         </record>
         <record id="marche_1" model="crm.type.marche">
             <field name="name">En cours de soumission</field>

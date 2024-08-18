@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="menu_request_credit_form" model="website.menu">
-        <field name="name">Demande de Crédit</field>
+        <field name="name">Crédit Corporate</field>
         <field name="url">/credit-request</field>
         <field name="parent_id" ref="website.main_menu"/>
         <field name="sequence" type="int">1</field>
@@ -10,10 +10,120 @@
         <t t-call="website.layout">
             <div id="wrap">
                 <div class="oe_structure">
+                    <style>
+                        .comment-box {
+                        width: 100%;
+                        max-width: 500px;
+                        height: 150px;
+                        padding: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        font-size: 14px;
+                        resize: vertical; /* Permet de redimensionner verticalement */
+                        }
+                        .stepper-wrapper {
+                        display: flex;
+                        width: 100%;
+                        margin-left: auto;
+                        margin-right: auto;
+                        }
+
+                        .stepper-item {
+                        position: relative;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        flex: 1;
+                        }
+                        .step-counter {
+                        z-index: 5;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        background: #ccc;
+                        margin-bottom: 10px;
+                        }
+                        .step-name.active{
+                        color: blue;
+                        }
+                        .stepper-item::after {
+                        position: absolute;
+                        content: "";
+                        border-bottom: 6px solid #ccc;
+                        width: 100%;
+                        top: 15px;
+                        left: 50%;
+                        }
+                        .stepper-item.active {
+                        font-weight: bold;
+                        }
+                        .stepper-item.active .step-counter {
+                        background-color: blue;
+                        }
+                        .stepper-item.active::after {
+                        position: absolute;
+                        border-bottom: 6px solid #ccc;
+                        content: "";
+                        width: 100%;
+                        top: 15px;
+                        left: 50%;
+                        }
+                        .stepper-item.completed {
+                        font-weight: bold;
+                        }
+                        .stepper-item.completed .step-counter {
+                        background-color: blue;
+                        color: white;
+                        }
+                        .stepper-item.completed::after {
+                        position: absolute;
+                        border-bottom: 6px solid blue;
+                        content: "";
+                        width: 100%;
+                        top: 15px;
+                        left: 50%;
+                        }
+
+
+                        .stepper-item:first-child::before {
+                        content: none;
+                        }
+                        .stepper-item:last-child::after {
+                        content: none;
+                        }
+                    </style>
                     <div class="container">
                         <h3 style="margin: 20px">Bienvenue au portail de Demande de Crédit</h3>
-                        <p style="margin: 20px">Veuillez remplir le formulaire pour completez votre demande</p>
                         <t t-if="step == 'step1'">
+                            <div class="text-center mt32 mb32">
+                                <div class="stepper-wrapper">
+                                    <div class="stepper-item active">
+                                        <div class="step-counter" style="color: #ccc; background-color: #ccc;">
+                                            <strong style="color: #1d4c89;font-size: 25px">1</strong>
+                                        </div>
+                                    </div>
+                                    <div class="stepper-item">
+                                        <div class="step-counter">2</div>
+                                    </div>
+                                    <div class="stepper-item">
+                                        <div class="step-counter">3</div>
+                                    </div>
+                                    <div class="stepper-item">
+                                        <div class="step-counter">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 576 512" width="25px"
+                                                 height="25px"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                                <path d="M400 0L176 0c-26.5 0-48.1 21.8-47.1 48.2c.2 5.3 .4 10.6 .7 15.8L24 64C10.7 64 0 74.7 0 88c0 92.6 33.5 157 78.5 200.7c44.3 43.1 98.3 64.8 138.1 75.8c23.4 6.5 39.4 26 39.4 45.6c0 20.9-17 37.9-37.9 37.9L192 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l192 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-26.1 0C337 448 320 431 320 410.1c0-19.6 15.9-39.2 39.4-45.6c39.9-11 93.9-32.7 138.2-75.8C542.5 245 576 180.6 576 88c0-13.3-10.7-24-24-24L446.4 64c.3-5.2 .5-10.4 .7-15.8C448.1 21.8 426.5 0 400 0zM48.9 112l84.4 0c9.1 90.1 29.2 150.3 51.9 190.6c-24.9-11-50.8-26.5-73.2-48.3c-32-31.1-58-76-63-142.3zM464.1 254.3c-22.4 21.8-48.3 37.3-73.2 48.3c22.7-40.3 42.8-100.5 51.9-190.6l84.4 0c-5.1 66.3-31.1 111.2-63 142.3z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p style="margin: 20px">Veuillez remplir le formulaire pour completez votre demande</p>
                             <form role="form" action="/create/request" method="POST" enctype="multipart/form-data"
                                   style="padding: 10px">
                                 <input type="hidden" name="opportunity_id"
@@ -21,8 +131,8 @@
                                 <input type="hidden" name="step" t-att-value="step"/>
                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                 <div class="form-group col-lg-6" style="padding: 10px">
-                                    <label for="partner_name" class="control-label">Nom de la société</label>
-                                    <input type="text" name="partner_name" t-att-value="partner_name" id="partner_name"
+                                    <label for="company_name" class="control-label">Nom de la société</label>
+                                    <input type="text" name="company_name" t-att-value="company_name" id="company_name"
                                            class="form-control" required="required"/>
                                 </div>
                                 <div class="form-group col-lg-6" style="padding: 10px">
@@ -31,14 +141,29 @@
                                            class="form-control"/>
                                 </div>
                                 <div class="form-group col-lg-6" style="padding: 10px">
-                                    <label for="branch" class="control-label">Wilaya du siege sociale</label>
-                                    <select name="branch" id="branch" class="form-control link-style">
-                                        <t t-foreach="branches" t-as="branch">
-                                            <option t-att-value="branch.id">
-                                                <t t-esc="branch.name" t-att-value="branch.id"/>
+                                    <label for="state_id" class="control-label">Wilaya du siege sociale</label>
+                                    <select name="state_id" id="state_id" class="form-control link-style">
+                                        <t t-foreach="wilayas" t-as="state_id">
+                                            <option t-att-value="state_id.id">
+                                                <t t-esc="state_id.name" t-att-value="state_id.id"/>
                                             </option>
                                         </t>
                                     </select>
+                                </div>
+                                <div class="form-group col-lg-6" style="padding: 10px">
+                                    <label for="forme_jur" class="control-label">Forme Juridique</label>
+                                    <select name="forme_jur" id="forme_jur" class="form-control link-style">
+                                        <t t-foreach="forme_juridiques" t-as="forme_jur">
+                                            <option t-att-value="forme_jur.id">
+                                                <t t-esc="forme_jur.name" t-att-value="forme_jur.id"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-6" style="padding: 10px">
+                                    <label for="representant" class="control-label">Representant</label>
+                                    <input type="text" name="representant" t-att-value="representant" id="representant"
+                                           class="form-control"/>
                                 </div>
                                 <div class="form-group col-lg-6" style="padding: 10px">
                                     <label for="website" class="control-label">Site web</label>
@@ -100,6 +225,32 @@
                                 margin-bottom: 10px;
                                 }
                             </style>
+                            <div class="text-center mt32 mb32">
+                                <div class="stepper-wrapper">
+
+                                    <div class="stepper-item">
+                                        <div class="step-counter">1</div>
+                                    </div>
+                                    <div class="stepper-item active">
+                                        <div class="step-counter" style="color: #ccc; background-color: #ccc;">
+                                            <strong style="color: #1d4c89;font-size: 25px">2</strong>
+                                        </div>
+                                    </div>
+                                    <div class="stepper-item">
+                                        <div class="step-counter">3</div>
+                                    </div>
+                                    <div class="stepper-item">
+                                        <div class="step-counter">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 576 512" width="25px"
+                                                 height="25px"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                                <path d="M400 0L176 0c-26.5 0-48.1 21.8-47.1 48.2c.2 5.3 .4 10.6 .7 15.8L24 64C10.7 64 0 74.7 0 88c0 92.6 33.5 157 78.5 200.7c44.3 43.1 98.3 64.8 138.1 75.8c23.4 6.5 39.4 26 39.4 45.6c0 20.9-17 37.9-37.9 37.9L192 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l192 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-26.1 0C337 448 320 431 320 410.1c0-19.6 15.9-39.2 39.4-45.6c39.9-11 93.9-32.7 138.2-75.8C542.5 245 576 180.6 576 88c0-13.3-10.7-24-24-24L446.4 64c.3-5.2 .5-10.4 .7-15.8C448.1 21.8 426.5 0 400 0zM48.9 112l84.4 0c9.1 90.1 29.2 150.3 51.9 190.6c-24.9-11-50.8-26.5-73.2-48.3c-32-31.1-58-76-63-142.3zM464.1 254.3c-22.4 21.8-48.3 37.3-73.2 48.3c22.7-40.3 42.8-100.5 51.9-190.6l84.4 0c-5.1 66.3-31.1 111.2-63 142.3z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="margin: 20px">Veuillez remplir le formulaire pour completez votre demande</p>
                             <form role="form" action="/create/request" method="POST" enctype="multipart/form-data"
                                   style="padding: 10px">
                                 <input type="hidden" name="opportunity_id"
@@ -114,22 +265,24 @@
                                         </label>
                                         <div class="radio-container">
                                             <input type="radio" name="has_account" t-att-value="no" id="has_account_no"
-                                                   required="required" checked="checked"/>
+                                                   required="required"
+                                                   t-att-checked="'checked' if not has_account else None"/>
                                             <label for="has_account_no">Non</label>
                                         </div>
                                         <div class="radio-container">
                                             <input type="radio" name="has_account" t-att-value="yes"
                                                    id="has_account_yes"
+                                                   t-att-checked="'checked' if has_account else None"
                                                    required="required"/>
                                             <label for="has_account_yes">Oui</label>
                                         </div>
                                     </div>
                                     <div class="form-group col-lg-6" style="padding: 10px;display: none;"
                                          id="rib_group">
-                                        <label for="rib" class="control-label">Veuillez inserer le RIB
+                                        <label for="num_compte" class="control-label">Veuillez inserer le RIB
                                         </label>
-                                        <input type="text" name="rib" t-att-value="rib"
-                                               id="rib" class="form-control"/>
+                                        <input type="text" name="num_compte" t-att-value="num_compte"
+                                               id="num_compte" class="form-control"/>
                                     </div>
                                     <div class="form-group col-lg-6" style="padding: 10px;">
                                         <label for="company_description" class="control-label">Description de votre
@@ -140,7 +293,9 @@
                                                   t-att-value="company_description"
                                                   class="comment-box form-group" rows="5"
                                                   style="width: 100%; height: 200px;"
-                                                  required="required"/>
+                                                  required="required">
+                                            <t t-esc="company_description"/>
+                                        </textarea>
                                     </div>
                                     <div class="form-group col-lg-6" style="padding: 10px;">
                                         <label for="nbr_employees" class="control-label">Nombre de salariés
@@ -160,98 +315,120 @@
                                         </label>
                                         <div class="radio-container">
                                             <input type="radio" name="has_confrere" value="no" id="has_confrere_no"
-                                                   required="required" checked="checked"/>
+                                                   required="required"
+                                                   t-att-checked="'checked' if not has_confrere else None"/>
                                             <label for="has_confrere_no">Non</label>
                                         </div>
                                         <div class="radio-container">
                                             <input type="radio" name="has_confrere" value="yes" id="has_confrere_yes"
-                                                   required="required"/>
+                                                   required="required"
+                                                   t-att-checked="'checked' if has_confrere else None"/>
                                             <label for="has_confrere_yes">Oui</label>
                                         </div>
                                     </div>
-                                    <div class="text-end mb-3 confrere" style="display: none;">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#createConfrereModal">Ajouter une ligne
-                                        </button>
-                                    </div>
-                                    <t t-set="confrere_ids" t-value="confrere_ids"/>
-                                    <table id="confrere_table" class="table confrere" t-if="confrere_ids">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Banque
-                                                </th>
-                                                <th>
-                                                    Type de crédit
-                                                </th>
-                                                <th>
-                                                    Montant
-                                                </th>
-                                                <th>
-                                                    Conditions
-                                                </th>
-                                                <th>
-                                                    Échéance ligne
-                                                </th>
-                                                <th>
-                                                    Garanties
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="confrere">
-                                            <t t-foreach="confrere_ids" t-as="confrere_id">
+                                    <div id="confrere_section">
+                                        <div class="text-end mb-3 confrere">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#createConfrereModal">Ajouter une ligne
+                                            </button>
+                                        </div>
+                                        <input type="file" t-attf-class="form-control form-control-sm"
+                                               id="confrere_file"
+                                               name="confrere_file" accept=".xls,.xlsx,.csv"/>
+                                        <t t-set="confrere_ids" t-value="confrere_ids"/>
+                                        <table id="confrere_table" class="table confrere" t-if="confrere_ids">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="confrere_id.banque.name"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="confrere_id.credit.name"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="confrere_id.montant"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="confrere_id.condition"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="confrere_id.date_echeance"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="confrere_id.garantie"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                    <form role="form" action="/delete_confrere" method="POST" class="delete-confrere-form" style="display: none;">
-                                                        <button type="submit" class="btn btn-secondary" style="display: none;">Modifier</button>
-                                                    </form>
-                                                    </td>
-                                                    <td>
-                                                   <form role="form" action="/delete/confrere" method="POST" enctype="multipart/form-data"
-                                                        style="padding: 10px">
-                                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                                        <input type="hidden" name="opportunity_id" t-att-value="opportunity_id"/>
-                                                        <input type="hidden" name="step" t-att-value="step"/>
-                                                        <input type="hidden" name="confrere_id" t-att-value="confrere_id.id"/>
-                                                            
-                                                        <button type="submit" class="btn btn-secondary" >Supprimer</button>
-                                                    </form>
-                                                    </td>
+                                                    <th>
+                                                        Banque
+                                                    </th>
+                                                    <th>
+                                                        Type de crédit
+                                                    </th>
+                                                    <th>
+                                                        Montant
+                                                    </th>
+                                                    <th>
+                                                        Conditions
+                                                    </th>
+                                                    <th>
+                                                        Échéance ligne
+                                                    </th>
+                                                    <th>
+                                                        Garanties
+                                                    </th>
                                                 </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody id="confrere">
+                                                <t t-foreach="confrere_ids" t-as="confrere_id">
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="confrere_id.banque.name"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="confrere_id.credit.name"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="confrere_id.montant"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="confrere_id.condition"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="confrere_id.date_echeance"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="confrere_id.garantie"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <form role="form" action="/delete_confrere" method="POST"
+                                                                  class="delete-confrere-form" style="display: none;">
+                                                                <button type="submit"
+                                                                        class="btn btn-secondary save-close-button"
+                                                                        style="display: none;">Modifier
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                        <td>
+                                                            <form role="form" action="/delete/confrere" method="POST"
+                                                                  enctype="multipart/form-data"
+                                                                  style="padding: 10px">
+                                                                <input type="hidden" name="csrf_token"
+                                                                       t-att-value="request.csrf_token()"/>
+                                                                <input type="hidden" name="opportunity_id"
+                                                                       t-att-value="opportunity_id"/>
+                                                                <input type="hidden" name="step" t-att-value="step"/>
+                                                                <input type="hidden" name="confrere_id"
+                                                                       t-att-value="confrere_id.id"/>
 
+                                                                <button type="submit"
+                                                                        class="btn btn-secondary save-close-button">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                         viewBox="0 0 448 512" width="15px"
+                                                                         height="15px"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                                                        <path fill="white"
+                                                                              d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                                                                    </svg>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <div class="form-group col-lg-6" style="padding: 10px;">
                                         <label for="has_importation" class="control-label">Faites-vous de l`importation
                                             ?
@@ -259,108 +436,133 @@
                                         <div class="radio-container">
                                             <input type="radio" name="has_importation" value="no"
                                                    id="has_importation_no"
-                                                   required="required" checked="checked"/>
+                                                   required="required"
+                                                   t-att-checked="'checked' if not has_importation else None"/>
                                             <label for="has_importation_no">Non</label>
                                         </div>
                                         <div class="radio-container">
                                             <input type="radio" name="has_importation" value="yes"
                                                    id="has_importation_yes"
+                                                   t-att-checked="'checked' if has_importation else None"
                                                    required="required"/>
                                             <label for="has_importation_yes">Oui</label>
                                         </div>
                                     </div>
-                                    <div class="text-end mb-3 importation" style="display: none;">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#createImportationModal">Ajouter une ligne
-                                        </button>
-                                    </div>
-                                    <t t-set="importation_ids" t-value="importation_ids"/>
-                                    <table id="importation_table" class="table importation" t-if="importation_ids">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Fournisseur
-                                                </th>
-                                                <th>
-                                                    Pays
-                                                </th>
-                                                <th>
-                                                    Mode de paiement
-                                                </th>
-                                                <th>
-                                                    Délai de paiement (en jours)
-                                                </th>
-                                                <th>
-                                                    Montant prévisionnel en DA
-                                                </th>
-                                                <th>
-                                                    Programme d'importation
-                                                </th>
-                                                <th width="30%">
-                                                    Délais de livraison (entre le lancement de la commande et le
-                                                    dédouanement de la marchandise) en jours
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="importation">
-                                            <t t-foreach="importation_ids" t-as="importation_id">
+                                    <div id="import_section">
+                                        <div class="text-end mb-3 importation">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#createImportationModal">Ajouter une ligne
+                                            </button>
+                                        </div>
+                                        <input type="file" t-attf-class="form-control form-control-sm"
+                                               accept=".xls,.xlsx,.csv"
+                                               id="importation_file"
+                                               name="importation_file"/>
+                                        <t t-set="importation_ids" t-value="importation_ids"/>
+                                        <table id="importation_table" class="table importation" t-if="importation_ids">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="importation_id.fournisseur"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="importation_id.pays.name"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <ul>
-                                                            <t t-foreach="importation_id.payment" t-as="pay">
-                                                                <li>
-                                                                    <t t-esc="pay.name"/>
-                                                                </li>
-                                                            </t>
-                                                        </ul>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="importation_id.delai"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="importation_id.montant"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="importation_id.programme_importation"/>
-                                                        </span>
-                                                    </td>
-                                                    <td width="30%">
-                                                        <span>
-                                                            <t t-esc="importation_id.delai_livraison"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                    <form role="form" action="/delete_confrere" method="POST" class="delete-confrere-form" >
-                                                        <button type="submit" class="btn btn-secondary" style="display: none;">Modifier</button>
-                                                    </form>
-                                                    </td>
-                                                    <td>
-                                                        <form role="form" action="/delete_importation" method="POST" class="delete-importation-form">
-                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                                            <input type="hidden" name="opportunity_id" t-att-value="opportunity_id"/>
-                                                            <input type="hidden" name="importation_id" t-att-value="importation_id.id"/>
-                                                            <input type="hidden" name="step" t-att-value="step"/>
-                                                            <button type="submit" class="btn btn-secondary">Supprimer</button>
-                                                        </form></td>
+                                                    <th>
+                                                        Fournisseur
+                                                    </th>
+                                                    <th>
+                                                        Pays
+                                                    </th>
+                                                    <th>
+                                                        Mode de paiement
+                                                    </th>
+                                                    <th>
+                                                        Délai de paiement (en jours)
+                                                    </th>
+                                                    <th>
+                                                        Montant prévisionnel en DA
+                                                    </th>
+                                                    <th>
+                                                        Programme d'importation
+                                                    </th>
+                                                    <th width="30%">
+                                                        Délais de livraison (entre le lancement de la commande et le
+                                                        dédouanement de la marchandise) en jours
+                                                    </th>
                                                 </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody id="importation">
+                                                <t t-foreach="importation_ids" t-as="importation_id">
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="importation_id.fournisseur"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="importation_id.pays.name"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <ul>
+                                                                <t t-foreach="importation_id.payment" t-as="pay">
+                                                                    <li>
+                                                                        <t t-esc="pay.name"/>
+                                                                    </li>
+                                                                </t>
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="importation_id.delai"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="importation_id.montant"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="importation_id.programme_importation"/>
+                                                            </span>
+                                                        </td>
+                                                        <td width="30%">
+                                                            <span>
+                                                                <t t-esc="importation_id.delai_livraison"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <form role="form" action="/delete_confrere" method="POST"
+                                                                  class="delete-confrere-form">
+                                                                <button type="submit"
+                                                                        class="btn btn-secondary save-close-button"
+                                                                        style="display: none;">Modifier
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                        <td>
+                                                            <form role="form" action="/delete_importation" method="POST"
+                                                                  class="delete-importation-form">
+                                                                <input type="hidden" name="csrf_token"
+                                                                       t-att-value="request.csrf_token()"/>
+                                                                <input type="hidden" name="opportunity_id"
+                                                                       t-att-value="opportunity_id"/>
+                                                                <input type="hidden" name="importation_id"
+                                                                       t-att-value="importation_id.id"/>
+                                                                <input type="hidden" name="step" t-att-value="step"/>
+                                                                <button type="submit"
+                                                                        class="btn btn-secondary save-close-button">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                         viewBox="0 0 448 512" width="15px"
+                                                                         height="15px"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                                                        <path fill="white"
+                                                                              d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                                                                    </svg>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
                                     <div class="form-group col-lg-6" style="padding: 10px;">
                                         <label for="has_appro" class="control-label">Approvisionnement auprès du marché
@@ -369,303 +571,369 @@
                                         <div class="radio-container">
                                             <input type="radio" name="has_appro" value="no"
                                                    id="has_appro_no"
-                                                   required="required" checked="checked"/>
+                                                   required="required"
+                                                   t-att-checked="'checked' if not has_appro else None"/>
                                             <label for="has_appro_no">Non</label>
                                         </div>
                                         <div class="radio-container">
                                             <input type="radio" name="has_appro" value="yes"
-                                                   id="has_appro_yes"
+                                                   id="has_appro_yes" t-att-checked="'checked' if has_appro else None"
                                                    required="required"/>
                                             <label for="has_appro_yes">Oui</label>
                                         </div>
                                     </div>
-                                    <div class="text-end mb-3 appro" style="display: none;">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#createApproModal">Ajouter une ligne
-                                        </button>
-                                    </div>
-                                    <t t-set="appro_ids" t-value="appro_ids"/>
-                                    <table id="appro_table" class="table appro" t-if="appro_ids">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Designation de marchandises / MP
-                                                </th>
-                                                <th>
-                                                    Fournisseur
-                                                </th>
-                                                <th>
-                                                    Mode de paiement
-                                                </th>
-                                                <th>
-                                                    Délai de paiement (en jours)
-                                                </th>
-                                                <th>
-                                                    Montant prévisionnel
-                                                </th>
-                                                <th>
-                                                    Mois prév. De lancement
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="appro">
-                                            <t t-foreach="appro_ids" t-as="appro_id">
+                                    <div id="appro_section">
+                                        <div class="text-end mb-3 appro">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#createApproModal">Ajouter une ligne
+                                            </button>
+                                        </div>
+                                        <input type="file" t-attf-class="form-control form-control-sm"
+                                               accept=".xls,.xlsx,.csv"
+                                               id="appro_file"
+                                               name="appro_file"/>
+                                        <t t-set="appro_ids" t-value="appro_ids"/>
+                                        <table id="appro_table" class="table appro" t-if="appro_ids">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="appro_id.marchandise"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="appro_id.fournisseur"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <ul>
-                                                            <t t-foreach="appro_id.payment" t-as="pay">
-                                                                <li>
-                                                                    <t t-esc="pay.name"/>
-                                                                </li>
-                                                            </t>
-                                                        </ul>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="appro_id.delai"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="appro_id.montant"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="appro_id.programme_importation"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                    <form role="form" action="/delete_confrere" method="POST" class="delete-confrere-form" style="display: none;">
-                                                        <button type="submit" class="btn btn-secondary" style="display: none;">Modifier</button>
-                                                    </form>
-                                                    </td>
-                                                    <td>
-                                                    <form role="form" action="/delete_appro" method="POST" class="delete-appro-form">
-                                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                                        <input type="hidden" name="opportunity_id" t-att-value="opportunity_id"/>
-                                                        <input type="hidden" name="appro_id" t-att-value="appro_id.id"/>
-                                                        <input type="hidden" name="step" t-att-value="step"/>
-                                                        <button type="submit" class="btn btn-secondary">Supprimer</button>
-                                                    </form>
+                                                    <th>
+                                                        Designation de marchandises / MP
+                                                    </th>
+                                                    <th>
+                                                        Fournisseur
+                                                    </th>
+                                                    <th>
+                                                        Mode de paiement
+                                                    </th>
+                                                    <th>
+                                                        Délai de paiement (en jours)
+                                                    </th>
+                                                    <th>
+                                                        Montant prévisionnel
+                                                    </th>
+                                                    <th>
+                                                        Mois prév. De lancement
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="appro">
+                                                <t t-foreach="appro_ids" t-as="appro_id">
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="appro_id.marchandise"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="appro_id.fournisseur"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <ul>
+                                                                <t t-foreach="appro_id.payment" t-as="pay">
+                                                                    <li>
+                                                                        <t t-esc="pay.name"/>
+                                                                    </li>
+                                                                </t>
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="appro_id.delai"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="appro_id.montant"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="appro_id.programme_importation"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <form role="form" action="/delete_confrere" method="POST"
+                                                                  class="delete-confrere-form" style="display: none;">
+                                                                <button type="submit"
+                                                                        class="btn btn-secondary save-close-button"
+                                                                        style="display: none;">Modifier
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                        <td>
+                                                            <form role="form" action="/delete_appro" method="POST"
+                                                                  class="delete-appro-form">
+                                                                <input type="hidden" name="csrf_token"
+                                                                       t-att-value="request.csrf_token()"/>
+                                                                <input type="hidden" name="opportunity_id"
+                                                                       t-att-value="opportunity_id"/>
+                                                                <input type="hidden" name="appro_id"
+                                                                       t-att-value="appro_id.id"/>
+                                                                <input type="hidden" name="step" t-att-value="step"/>
+                                                                <button type="submit"
+                                                                        class="btn btn-secondary save-close-button">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                         viewBox="0 0 448 512" width="15px"
+                                                                         height="15px"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                                                        <path fill="white"
+                                                                              d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                                                                    </svg>
+                                                                </button>
+                                                            </form>
 
-                                                    </td>
-                                                </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <h4>Plan des charges</h4>
-                                    <div class="text-end mb-3 plan">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#createPlanModal">Ajouter une ligne
-                                        </button>
-                                    </div>
-                                    <t t-set="plan_ids" t-value="plan_ids"/>
-                                    <table id="plan_table" class="table" t-if="plan_ids">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Type de marché
-                                                </th>
-                                                <th>
-                                                    Client
-                                                </th>
-                                                <th>
-                                                    Dom. Bancaire
-                                                </th>
-                                                <th>
-                                                    Natissement
-                                                </th>
-                                                <th>
-                                                    Montant H.T DA
-                                                </th>
-                                                <th>
-                                                    Objet du marché
-                                                </th>
-                                                <th>
-                                                    Date ODS
-                                                </th>
-                                                <th>
-                                                    Délai d`excution (en jours)
-                                                </th>
-                                                <th>
-                                                    Taux d`avancement
-                                                </th>
-                                                <th>
-                                                    Montant facturé H.T
-                                                </th>
-                                                <th>
-                                                    Montant encaissé H.T
-                                                </th>
-                                                <th>
-                                                    Montant facturé non-encaissé H.T
-                                                </th>
-                                                <th>
-                                                    Montant réalisé non-facturé H.T
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="plan">
-                                            <t t-foreach="plan_ids" t-as="plan_id">
+                                    <div id="plan_section">
+                                        <div class="text-end mb-3 plan">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#createPlanModal">Ajouter une ligne
+                                            </button>
+                                        </div>
+                                        <input type="file" t-attf-class="form-control form-control-sm"
+                                               accept=".xls,.xlsx,.csv"
+                                               id="plan_file"
+                                               name="plan_file"/>
+                                        <t t-set="plan_ids" t-value="plan_ids"/>
+                                        <table id="plan_table" class="table" t-if="plan_ids">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.type_marche.name"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.client"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.dom_bancaire.name"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.natissement"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.montant"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.objet"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.date_obs"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.delai"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.taux"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.montant_facture"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.montant_encaisse"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.montant_fact_no_encaisse"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.montant_no_fact_realise"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                    <form role="form" action="/delete_confrere" method="POST" class="delete-confrere-form" style="display: none;">
-                                                        <button type="submit" class="btn btn-secondary" style="display: none;">Modifier</button>
-                                                    </form>
-                                                    </td>
-                                                    <td>
-                                                        <form role="form" action="/delete_plan" method="POST" class="delete-plan-form">
-                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                                            <input type="hidden" name="opportunity_id" t-att-value="opportunity_id"/>
-                                                            <input type="hidden" name="plan_id" t-att-value="plan_id.id"/>
-                                                            <input type="hidden" name="step" t-att-value="step"/>
-                                                            <button type="submit" class="btn btn-secondary">Supprimer</button>
-                                                        </form>
-                                                    </td>
+                                                    <th>
+                                                        Type de marché
+                                                    </th>
+                                                    <th>
+                                                        Client
+                                                    </th>
+                                                    <th>
+                                                        Dom. Bancaire
+                                                    </th>
+                                                    <th>
+                                                        Natissement
+                                                    </th>
+                                                    <th>
+                                                        Montant H.T DA
+                                                    </th>
+                                                    <th>
+                                                        Objet du marché
+                                                    </th>
+                                                    <th>
+                                                        Date ODS
+                                                    </th>
+                                                    <th>
+                                                        Délai d`excution (en jours)
+                                                    </th>
+                                                    <th>
+                                                        Taux d`avancement
+                                                    </th>
+                                                    <th>
+                                                        Montant facturé H.T
+                                                    </th>
+                                                    <th>
+                                                        Montant encaissé H.T
+                                                    </th>
+                                                    <th>
+                                                        Montant facturé non-encaissé H.T
+                                                    </th>
+                                                    <th>
+                                                        Montant réalisé non-facturé H.T
+                                                    </th>
                                                 </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody id="plan">
+                                                <t t-foreach="plan_ids" t-as="plan_id">
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.type_marche.name"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.client"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.dom_bancaire.name"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.natissement"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.montant"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.objet"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.date_obs"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.delai"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.taux"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.montant_facture"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.montant_encaisse"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.montant_fact_no_encaisse"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.montant_no_fact_realise"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <form role="form" action="/delete_confrere" method="POST"
+                                                                  class="delete-confrere-form" style="display: none;">
+                                                                <button type="submit"
+                                                                        class="btn btn-secondary save-close-button"
+                                                                        style="display: none;">Modifier
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                        <td>
+                                                            <form role="form" action="/delete_plan" method="POST"
+                                                                  class="delete-plan-form">
+                                                                <input type="hidden" name="csrf_token"
+                                                                       t-att-value="request.csrf_token()"/>
+                                                                <input type="hidden" name="opportunity_id"
+                                                                       t-att-value="opportunity_id"/>
+                                                                <input type="hidden" name="plan_id"
+                                                                       t-att-value="plan_id.id"/>
+                                                                <input type="hidden" name="step" t-att-value="step"/>
+                                                                <button type="submit"
+                                                                        class="btn btn-secondary save-close-button">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                         viewBox="0 0 448 512" width="15px"
+                                                                         height="15px"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                                                        <path fill="white"
+                                                                              d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                                                                    </svg>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <h4>Financement sollicité</h4>
-                                    <div class="text-end mb-3 fin">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#createFinancementModal">Ajouter une ligne
-                                        </button>
-                                    </div>
-                                    <t t-set="financement_ids" t-value="financement_ids"/>
-                                    <table id="financement_table" class="table" t-if="financement_ids">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Type de financement
-                                                </th>
-                                                <th>
-                                                    Montant
-                                                </th>
-                                                <th>
-                                                    Utilisation
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="financement">
-                                            <t t-foreach="financement_ids" t-as="financement_id">
+                                    <div id="finance_section">
+                                        <div class="text-end mb-3 fin">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    id="open-modal-button"
+                                                    data-bs-target="#createFinancementModal">Ajouter une ligne
+                                            </button>
+                                        </div>
+                                        <t t-set="financement_ids" t-value="financement_ids"/>
+                                        <table id="financement_table" class="table" t-if="financement_ids">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="financement_id.type_fin.name"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="financement_id.montant"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="financement_id.utilisation"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                    <form role="form" action="/delete_confrere" method="POST" class="delete-confrere-form">
-                                                        <button type="submit" class="btn btn-secondary" style="display: none;">Modifier</button>
-                                                    </form>
-                                                    </td>
-                                                    <td>
-                                                    <form role="form" action="/delete_financement" method="POST" class="delete-financement-form">
-                                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                                        <input type="hidden" name="opportunity_id" t-att-value="opportunity_id"/>
-                                                        <input type="hidden" name="financement_id" t-att-value="financement_id.id"/>
-                                                        <input type="hidden" name="step" t-att-value="step"/>
-                                                        <button type="submit" class="btn btn-secondary">Supprimer</button>
-                                                    </form>
-                                                    </td>
+                                                    <th>
+                                                        Type de financement
+                                                    </th>
+                                                    <th>
+                                                        Montant
+                                                    </th>
+                                                    <th>
+                                                        Utilisation
+                                                    </th>
                                                 </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody id="financement">
+                                                <t t-foreach="financement_ids" t-as="financement_id">
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="financement_id.type_fin.name"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="financement_id.montant"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="financement_id.utilisation"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <form role="form" action="/delete_confrere" method="POST"
+                                                                  class="delete-confrere-form">
+                                                                <button type="submit"
+                                                                        class="btn btn-secondary save-close-button"
+                                                                        style="display: none;">Modifier
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                        <td>
+                                                            <form role="form" action="/delete_financement" method="POST"
+                                                                  class="delete-financement-form">
+                                                                <input type="hidden" name="csrf_token"
+                                                                       t-att-value="request.csrf_token()"/>
+                                                                <input type="hidden" name="opportunity_id"
+                                                                       t-att-value="opportunity_id"/>
+                                                                <input type="hidden" name="financement_id"
+                                                                       t-att-value="financement_id.id"/>
+                                                                <input type="hidden" name="step" t-att-value="step"/>
+                                                                <button type="submit"
+                                                                        class="btn btn-secondary save-close-button">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                         viewBox="0 0 448 512" width="15px"
+                                                                         height="15px"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                                                        <path fill="white"
+                                                                              d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                                                                    </svg>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
                                     <div class="form-group col-lg-6" style="padding: 10px;">
                                         <label for="garanties" class="control-label">Garanties proposées
                                         </label>
                                         <br/>
                                         <textarea id="garanties" name="garanties" t-att-value="garanties"
                                                   class="comment-box form-group" rows="5"
-                                                  style="width: 100%; height: 200px;"
-                                                  />
+                                                  style="width: 100%; height: 200px;">
+                                            <t t-esc="garanties" />
+                                        </textarea>
                                     </div>
                                 </t>
                                 <t t-else="">
@@ -688,66 +956,69 @@
                                     </div>
 
                                     <h4>Financement sollicité</h4>
-                                    <div class="text-end mb-3 fin">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#createFinancementRenModal">Ajouter une ligne
-                                        </button>
-                                    </div>
-                                    <t t-set="financement_ids" t-value="financement_ids"/>
-                                    <table id="financement_1_table" class="table" t-if="financement_ids">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Type de financement
-                                                </th>
-                                                <th>
-                                                    Autorisation actuelle
-                                                </th>
-                                                <th>
-                                                    Validité de la ligne
-                                                </th>
-                                                <th>
-                                                    Plafond demandé
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="financement">
-                                            <t t-foreach="financement_ids" t-as="financement_id">
+                                    <div id="finance_section">
+                                        <div class="text-end mb-3 fin">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#createFinancementRenModal">Ajouter une ligne
+                                            </button>
+                                        </div>
+                                        <t t-set="financement_ids" t-value="financement_ids"/>
+                                        <table id="financement_1_table" class="table" t-if="financement_ids">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="financement_id.type_fin.name"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="financement_id.autorisation_actuel"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="financement_id.validite"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="financement_id.new_plafond"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                    </td>
+                                                    <th>
+                                                        Type de financement
+                                                    </th>
+                                                    <th>
+                                                        Autorisation actuelle
+                                                    </th>
+                                                    <th>
+                                                        Validité de la ligne
+                                                    </th>
+                                                    <th>
+                                                        Plafond demandé
+                                                    </th>
                                                 </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody id="financement">
+                                                <t t-foreach="financement_ids" t-as="financement_id">
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="financement_id.type_fin.name"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="financement_id.autorisation_actuel"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="financement_id.validite"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="financement_id.new_plafond"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <div class="form-group col-lg-6" style="padding: 10px;">
                                         <label for="garanties" class="control-label">Garanties proposées
                                         </label>
                                         <br/>
-                                        <textarea id="garanties" name="garanties"
+                                        <textarea id="garanties" name="garanties" t-att-value="garanties"
                                                   class="comment-box form-group" rows="5"
-                                                  style="width: 100%; height: 200px;"
-                                                  />
+                                                  style="width: 100%; height: 200px;">
+                                            <t t-esc="garanties" />
+                                        </textarea>
                                     </div>
                                     <div class="form-group col-lg-6" style="padding: 10px;">
                                         <label for="has_confrere" class="control-label">Avez-vous des crédit bancaire
@@ -755,85 +1026,91 @@
                                         </label>
                                         <div class="radio-container">
                                             <input type="radio" name="has_confrere" value="no" id="has_confrere_no"
-                                                   required="required" checked="checked"/>
+                                                   required="required"
+                                                   t-att-checked="'checked' if not has_confrere else None"/>
                                             <label for="has_confrere_no">Non</label>
                                         </div>
                                         <div class="radio-container">
                                             <input type="radio" name="has_confrere" value="yes" id="has_confrere_yes"
-                                                   required="required"/>
+                                                   required="required"
+                                                   t-att-checked="'checked' if has_confrere else None"/>
                                             <label for="has_confrere_yes">Oui</label>
                                         </div>
                                     </div>
-                                    <div class="text-end mb-3 confrere" style="display: none;">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                id="createconfrere"
-                                                data-bs-target="#createConfrereModal">Ajouter une ligne
-                                        </button>
-                                    </div>
-                                    <t t-set="confrere_ids" t-value="confrere_ids"/>
-                                    <table id="confrere_table" class="table confrere" t-if="confrere_ids">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Banque
-                                                </th>
-                                                <th>
-                                                    Type de crédit
-                                                </th>
-                                                <th>
-                                                    Montant
-                                                </th>
-                                                <th>
-                                                    Conditions
-                                                </th>
-                                                <th>
-                                                    Échéance ligne
-                                                </th>
-                                                <th>
-                                                    Garanties
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="confrere">
-                                            <t t-foreach="confrere_ids" t-as="confrere_id">
+                                    <div id="confrere_section">
+                                        <div class="text-end mb-3 confrere">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    id="createconfrere"
+                                                    data-bs-target="#createConfrereModal">Ajouter une ligne
+                                            </button>
+                                        </div>
+                                        <input type="file" t-attf-class="form-control form-control-sm"
+                                               id="confrere_file"
+                                               name="confrere_file" accept=".xls,.xlsx,.csv"/>
+                                        <t t-set="confrere_ids" t-value="confrere_ids"/>
+                                        <table id="confrere_table" class="table confrere" t-if="confrere_ids">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="confrere_id.banque.name"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="confrere_id.credit.name"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="confrere_id.montant"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="confrere_id.condition"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="confrere_id.date_echeance"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="confrere_id.garantie"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                    </td>
+                                                    <th>
+                                                        Banque
+                                                    </th>
+                                                    <th>
+                                                        Type de crédit
+                                                    </th>
+                                                    <th>
+                                                        Montant
+                                                    </th>
+                                                    <th>
+                                                        Conditions
+                                                    </th>
+                                                    <th>
+                                                        Échéance ligne
+                                                    </th>
+                                                    <th>
+                                                        Garanties
+                                                    </th>
                                                 </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
-
+                                            </thead>
+                                            <tbody id="confrere">
+                                                <t t-foreach="confrere_ids" t-as="confrere_id">
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="confrere_id.banque.name"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="confrere_id.credit.name"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="confrere_id.montant"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="confrere_id.condition"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="confrere_id.date_echeance"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="confrere_id.garantie"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <div class="form-group col-lg-6" style="padding: 10px;">
                                         <label for="has_importation" class="control-label">Faites-vous de l`importation
                                             ?
@@ -841,97 +1118,106 @@
                                         <div class="radio-container">
                                             <input type="radio" name="has_importation" value="no"
                                                    id="has_importation_no"
-                                                   required="required" checked="checked"/>
+                                                   required="required"
+                                                   t-att-checked="'checked' if not has_importation else None"/>
                                             <label for="has_importation_no">Non</label>
                                         </div>
                                         <div class="radio-container">
                                             <input type="radio" name="has_importation" value="yes"
                                                    id="has_importation_yes"
+                                                   t-att-checked="'checked' if has_importation else None"
                                                    required="required"/>
                                             <label for="has_importation_yes">Oui</label>
                                         </div>
                                     </div>
-                                    <div class="text-end mb-3 importation" style="display: none;">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#createImportationModal">Ajouter une ligne
-                                        </button>
-                                    </div>
-                                    <t t-set="importation_ids" t-value="importation_ids"/>
-                                    <table id="importation_table" class="table importation" t-if="importation_ids">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Fournisseur
-                                                </th>
-                                                <th>
-                                                    Pays
-                                                </th>
-                                                <th>
-                                                    Mode de paiement
-                                                </th>
-                                                <th>
-                                                    Délai de paiement (en jours)
-                                                </th>
-                                                <th>
-                                                    Montant prévisionnel en DA
-                                                </th>
-                                                <th>
-                                                    Programme d'importation
-                                                </th>
-                                                <th width="30%">
-                                                    Délais de livraison (entre le lancement de la commande et le
-                                                    dédouanement de la marchandise) en jours
-                                                </th>
-                                               <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="importation">
-                                            <t t-foreach="importation_ids" t-as="importation_id">
+                                    <div id="import_section">
+                                        <div class="text-end mb-3 importation">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#createImportationModal">Ajouter une ligne
+                                            </button>
+                                        </div>
+                                        <input type="file" t-attf-class="form-control form-control-sm"
+                                               accept=".xls,.xlsx,.csv"
+                                               id="importation_file"
+                                               name="importation_file"/>
+                                        <t t-set="importation_ids" t-value="importation_ids"/>
+                                        <table id="importation_table" class="table importation" t-if="importation_ids">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="importation_id.fournisseur"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="importation_id.pays.name"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <ul>
-                                                            <t t-foreach="importation_id.payment" t-as="pay">
-                                                                <li>
-                                                                    <t t-esc="pay.name"/>
-                                                                </li>
-                                                            </t>
-                                                        </ul>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="importation_id.delai"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="importation_id.montant"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="importation_id.programme_importation"/>
-                                                        </span>
-                                                    </td>
-                                                    <td width="30%">
-                                                        <span>
-                                                            <t t-esc="importation_id.delai_livraison"/>
-                                                        </span>
-                                                    </td>
-                                                    
+                                                    <th>
+                                                        Fournisseur
+                                                    </th>
+                                                    <th>
+                                                        Pays
+                                                    </th>
+                                                    <th>
+                                                        Mode de paiement
+                                                    </th>
+                                                    <th>
+                                                        Délai de paiement (en jours)
+                                                    </th>
+                                                    <th>
+                                                        Montant prévisionnel en DA
+                                                    </th>
+                                                    <th>
+                                                        Programme d'importation
+                                                    </th>
+                                                    <th width="30%">
+                                                        Délais de livraison (entre le lancement de la commande et le
+                                                        dédouanement de la marchandise) en jours
+                                                    </th>
+                                                    <th></th>
                                                 </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody id="importation">
+                                                <t t-foreach="importation_ids" t-as="importation_id">
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="importation_id.fournisseur"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="importation_id.pays.name"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <ul>
+                                                                <t t-foreach="importation_id.payment" t-as="pay">
+                                                                    <li>
+                                                                        <t t-esc="pay.name"/>
+                                                                    </li>
+                                                                </t>
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="importation_id.delai"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="importation_id.montant"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="importation_id.programme_importation"/>
+                                                            </span>
+                                                        </td>
+                                                        <td width="30%">
+                                                            <span>
+                                                                <t t-esc="importation_id.delai_livraison"/>
+                                                            </span>
+                                                        </td>
+
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
 
                                     <div class="form-group col-lg-6" style="padding: 10px;">
                                         <label for="has_appro" class="control-label">Approvisionnement auprès du marché
@@ -940,213 +1226,223 @@
                                         <div class="radio-container">
                                             <input type="radio" name="has_appro" value="no"
                                                    id="has_appro_no"
-                                                   required="required" checked="checked"/>
+                                                   required="required"
+                                                   t-att-checked="'checked' if not has_appro else None"/>
                                             <label for="has_appro_no">Non</label>
                                         </div>
                                         <div class="radio-container">
                                             <input type="radio" name="has_appro" value="yes"
-                                                   id="has_appro_yes"
+                                                   id="has_appro_yes" t-att-checked="'checked' if has_appro else None"
                                                    required="required"/>
                                             <label for="has_appro_yes">Oui</label>
                                         </div>
                                     </div>
-                                    <div class="text-end mb-3 appro" style="display: none;">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#createApproModal">Ajouter une ligne
-                                        </button>
-                                    </div>
-                                    <t t-set="appro_ids" t-value="appro_ids"/>
-                                    <table id="appro_table" class="table appro" t-if="appro_ids">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Designation de marchandises / MP
-                                                </th>
-                                                <th>
-                                                    Fournisseur
-                                                </th>
-                                                <th>
-                                                    Mode de paiement
-                                                </th>
-                                                <th>
-                                                    Délai de paiement (en jours)
-                                                </th>
-                                                <th>
-                                                    Montant prévisionnel
-                                                </th>
-                                                <th>
-                                                    Mois prév. De lancement
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="appro">
-                                            <t t-foreach="appro_ids" t-as="appro_id">
+                                    <div id="appro_section">
+                                        <div class="text-end mb-3 appro">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#createApproModal">Ajouter une ligne
+                                            </button>
+                                        </div>
+                                        <input type="file" t-attf-class="form-control form-control-sm"
+                                               accept=".xls,.xlsx,.csv"
+                                               id="appro_file"
+                                               name="appro_file"/>
+                                        <t t-set="appro_ids" t-value="appro_ids"/>
+                                        <table id="appro_table" class="table appro" t-if="appro_ids">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="appro_id.marchandise"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="appro_id.fournisseur"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <ul>
-                                                            <t t-foreach="appro_id.payment" t-as="pay">
-                                                                <li>
-                                                                    <t t-esc="pay.name"/>
-                                                                </li>
-                                                            </t>
-                                                        </ul>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="appro_id.delai"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="appro_id.montant"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="appro_id.programme_importation"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                    </td>
+                                                    <th>
+                                                        Designation de marchandises / MP
+                                                    </th>
+                                                    <th>
+                                                        Fournisseur
+                                                    </th>
+                                                    <th>
+                                                        Mode de paiement
+                                                    </th>
+                                                    <th>
+                                                        Délai de paiement (en jours)
+                                                    </th>
+                                                    <th>
+                                                        Montant prévisionnel
+                                                    </th>
+                                                    <th>
+                                                        Mois prév. De lancement
+                                                    </th>
                                                 </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody id="appro">
+                                                <t t-foreach="appro_ids" t-as="appro_id">
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="appro_id.marchandise"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="appro_id.fournisseur"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <ul>
+                                                                <t t-foreach="appro_id.payment" t-as="pay">
+                                                                    <li>
+                                                                        <t t-esc="pay.name"/>
+                                                                    </li>
+                                                                </t>
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="appro_id.delai"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="appro_id.montant"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="appro_id.programme_importation"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <h4>Plan des charges</h4>
-                                    <div class="text-end mb-3 plan">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#createPlanModal">Ajouter une ligne
-                                        </button>
-                                    </div>
-                                    <t t-set="plan_ids" t-value="plan_ids"/>
-                                    <table id="plan_table" class="table" t-if="plan_ids">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Type de marché
-                                                </th>
-                                                <th>
-                                                    Client
-                                                </th>
-                                                <th>
-                                                    Dom. Bancaire
-                                                </th>
-                                                <th>
-                                                    Natissement
-                                                </th>
-                                                <th>
-                                                    Montant H.T DA
-                                                </th>
-                                                <th>
-                                                    Objet du marché
-                                                </th>
-                                                <th>
-                                                    Date ODS
-                                                </th>
-                                                <th>
-                                                    Délai d`excution (en jours)
-                                                </th>
-                                                <th>
-                                                    Taux d`avancement
-                                                </th>
-                                                <th>
-                                                    Montant facturé H.T
-                                                </th>
-                                                <th>
-                                                    Montant encaissé H.T
-                                                </th>
-                                                <th>
-                                                    Montant facturé non-encaissé H.T
-                                                </th>
-                                                <th>
-                                                    Montant réalisé non-facturé H.T
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="plan">
-                                            <t t-foreach="plan_ids" t-as="plan_id">
+                                    <div id="plan_section">
+                                        <div class="text-end mb-3 plan">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#createPlanModal">Ajouter une ligne
+                                            </button>
+                                        </div>
+                                        <t t-set="plan_ids" t-value="plan_ids"/>
+                                        <table id="plan_table" class="table" t-if="plan_ids">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.type_marche.name"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.client"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.dom_bancaire.name"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.natissement"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.montant"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.objet"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.date_obs"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.delai"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.taux"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.montant_facture"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.montant_encaisse"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.montant_fact_no_encaisse"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <t t-esc="plan_id.montant_no_fact_realise"/>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                    </td>
+                                                    <th>
+                                                        Type de marché
+                                                    </th>
+                                                    <th>
+                                                        Client
+                                                    </th>
+                                                    <th>
+                                                        Dom. Bancaire
+                                                    </th>
+                                                    <th>
+                                                        Natissement
+                                                    </th>
+                                                    <th>
+                                                        Montant H.T DA
+                                                    </th>
+                                                    <th>
+                                                        Objet du marché
+                                                    </th>
+                                                    <th>
+                                                        Date ODS
+                                                    </th>
+                                                    <th>
+                                                        Délai d`excution (en jours)
+                                                    </th>
+                                                    <th>
+                                                        Taux d`avancement
+                                                    </th>
+                                                    <th>
+                                                        Montant facturé H.T
+                                                    </th>
+                                                    <th>
+                                                        Montant encaissé H.T
+                                                    </th>
+                                                    <th>
+                                                        Montant facturé non-encaissé H.T
+                                                    </th>
+                                                    <th>
+                                                        Montant réalisé non-facturé H.T
+                                                    </th>
                                                 </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody id="plan">
+                                                <t t-foreach="plan_ids" t-as="plan_id">
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.type_marche.name"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.client"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.dom_bancaire.name"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.natissement"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.montant"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.objet"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.date_obs"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.delai"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.taux"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.montant_facture"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.montant_encaisse"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.montant_fact_no_encaisse"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <t t-esc="plan_id.montant_no_fact_realise"/>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
                                 </t>
                                 <div class="clearfix oe_login_buttons">
                                     <button class="btn btn-primary submit pull-left">Suivant</button>
@@ -1154,6 +1450,32 @@
                             </form>
                         </t>
                         <t t-if="step == 'step3'">
+                            <div class="text-center mt32 mb32">
+                                <div class="stepper-wrapper">
+
+                                    <div class="stepper-item">
+                                        <div class="step-counter">1</div>
+                                    </div>
+                                    <div class="stepper-item">
+                                        <div class="step-counter">2</div>
+                                    </div>
+                                    <div class="stepper-item active">
+                                        <div class="step-counter" style="color: #ccc; background-color: #ccc;">
+                                            <strong style="color: #1d4c89;font-size: 25px">3</strong>
+                                        </div>
+                                    </div>
+                                    <div class="stepper-item">
+                                        <div class="step-counter">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 576 512" width="25px"
+                                                 height="25px"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                                <path d="M400 0L176 0c-26.5 0-48.1 21.8-47.1 48.2c.2 5.3 .4 10.6 .7 15.8L24 64C10.7 64 0 74.7 0 88c0 92.6 33.5 157 78.5 200.7c44.3 43.1 98.3 64.8 138.1 75.8c23.4 6.5 39.4 26 39.4 45.6c0 20.9-17 37.9-37.9 37.9L192 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l192 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-26.1 0C337 448 320 431 320 410.1c0-19.6 15.9-39.2 39.4-45.6c39.9-11 93.9-32.7 138.2-75.8C542.5 245 576 180.6 576 88c0-13.3-10.7-24-24-24L446.4 64c.3-5.2 .5-10.4 .7-15.8C448.1 21.8 426.5 0 400 0zM48.9 112l84.4 0c9.1 90.1 29.2 150.3 51.9 190.6c-24.9-11-50.8-26.5-73.2-48.3c-32-31.1-58-76-63-142.3zM464.1 254.3c-22.4 21.8-48.3 37.3-73.2 48.3c22.7-40.3 42.8-100.5 51.9-190.6l84.4 0c-5.1 66.3-31.1 111.2-63 142.3z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="margin: 20px">Veuillez remplir le formulaire pour completez votre demande</p>
                             <form role="form" action="/create/request" method="POST" enctype="multipart/form-data"
                                   style="padding: 10px">
                                 <input type="hidden" name="opportunity_id"
@@ -1196,6 +1518,44 @@
                                 <div class="clearfix oe_login_buttons">
                                     <button class="btn btn-primary submit pull-left">Suivant</button>
                                 </div>
+                            </form>
+                        </t>
+                        <t t-if="step == 'step4'">
+                            <div class="text-center mt32 mb32">
+                                <div class="stepper-wrapper">
+
+                                    <div class="stepper-item">
+                                        <div class="step-counter">1</div>
+                                    </div>
+                                    <div class="stepper-item">
+                                        <div class="step-counter">2</div>
+                                    </div>
+                                    <div class="stepper-item">
+                                        <div class="step-counter">3</div>
+                                    </div>
+                                    <div class="stepper-item active">
+                                        <div class="step-counter" style="color: #ccc; background-color: #ccc;">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 576 512" width="25px"
+                                                 height="25px"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                                <path fill="#1d4c89"
+                                                      d="M400 0L176 0c-26.5 0-48.1 21.8-47.1 48.2c.2 5.3 .4 10.6 .7 15.8L24 64C10.7 64 0 74.7 0 88c0 92.6 33.5 157 78.5 200.7c44.3 43.1 98.3 64.8 138.1 75.8c23.4 6.5 39.4 26 39.4 45.6c0 20.9-17 37.9-37.9 37.9L192 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l192 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-26.1 0C337 448 320 431 320 410.1c0-19.6 15.9-39.2 39.4-45.6c39.9-11 93.9-32.7 138.2-75.8C542.5 245 576 180.6 576 88c0-13.3-10.7-24-24-24L446.4 64c.3-5.2 .5-10.4 .7-15.8C448.1 21.8 426.5 0 400 0zM48.9 112l84.4 0c9.1 90.1 29.2 150.3 51.9 190.6c-24.9-11-50.8-26.5-73.2-48.3c-32-31.1-58-76-63-142.3zM464.1 254.3c-22.4 21.8-48.3 37.3-73.2 48.3c22.7-40.3 42.8-100.5 51.9-190.6l84.4 0c-5.1 66.3-31.1 111.2-63 142.3z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <form role="form" action="/create/request" method="POST" enctype="multipart/form-data"
+                                  style="padding: 10px">
+                                <input type="hidden" name="opportunity_id"
+                                       t-att-value="opportunity_id"/>
+                                <input type="hidden" name="step" t-att-value="step"/>
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                                <p style="margin: 20px">Votre demande est enregistré avec succès</p>
+                                <br/>
+                                <p style="margin: 20px">Un mail vous sera transmis pour suivre votre demande</p>
+
                             </form>
                         </t>
                     </div>
@@ -1256,7 +1616,7 @@
                                 <input type="text" t-attf-class="form-control form-control-sm"
                                        id="garantie" name="garantie"/>
                             </div>
-                            <button type="submit" class="btn btn-secondary">Ajouter</button>
+                            <button type="submit" class="btn btn-secondary save-close-button">Ajouter</button>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -1332,7 +1692,7 @@
                                 <input type="number" t-attf-class="form-control form-control-sm"
                                        id="delai_livraison" name="delai_livraison" required="required"/>
                             </div>
-                            <button type="submit" class="btn btn-secondary">Ajouter</button>
+                            <button type="submit" class="btn btn-secondary save-close-button">Ajouter</button>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -1396,7 +1756,7 @@
                                 <input type="month" t-attf-class="form-control form-control-sm"
                                        id="programme_importation" name="programme_importation" required="required"/>
                             </div>
-                            <button type="submit" class="btn btn-secondary">Ajouter</button>
+                            <button type="submit" class="btn btn-secondary save-close-button">Ajouter</button>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -1503,7 +1863,7 @@
                                 <input type="number" t-attf-class="form-control form-control-sm"
                                        id="montant_no_fact_realise" name="montant_no_fact_realise" required="required"/>
                             </div>
-                            <button type="submit" class="btn btn-secondary">Ajouter</button>
+                            <button type="submit" class="btn btn-secondary save-close-button">Ajouter</button>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -1549,7 +1909,9 @@
                                 <input type="text" t-attf-class="form-control form-control-sm"
                                        id="utilisation" name="utilisation" required="required"/>
                             </div>
-                            <button type="submit" class="btn btn-secondary">Ajouter</button>
+                            <button type="submit" class="btn btn-secondary save-close-button" id="save-close-button">
+                                Ajouter
+                            </button>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -1559,8 +1921,30 @@
                 </div>
             </div>
         </div>
-
-        <div class="modal fade" id="createFinancementRenModal" tabindex="-1" aria-labelledby="createFinancementRenModalLabel"
+        <!--
+            document.getElementById('save-close-button').addEventListener('click', function(event) {
+                event.preventDefault();
+                const form = event.target.closest('form');
+                const formData = new FormData(form);
+                console.log(formData);
+            fetch(form.action, {
+            method: form.method,
+            body: formData,
+            })
+            .then(response => {
+            if (response.ok) {
+            // Si la requête est réussie, fermer le modal
+            $('#createFinancementModal').modal('hide');
+            } else {
+            console.error('Erreur lors de la soumission du formulaire.');
+            }
+            })
+            .catch(error => {
+            console.error('Erreur réseau:', error);
+            });
+            });-->
+        <div class="modal fade" id="createFinancementRenModal" tabindex="-1"
+             aria-labelledby="createFinancementRenModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -1601,7 +1985,7 @@
                                 <input type="number" t-attf-class="form-control form-control-sm"
                                        id="new_plafond" name="new_plafond" required="required"/>
                             </div>
-                            <button type="submit" class="btn btn-secondary">Ajouter</button>
+                            <button type="submit" class="btn btn-secondary save-close-button">Ajouter</button>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -1611,6 +1995,42 @@
                 </div>
             </div>
         </div>
+        <!--<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sélectionne tous les boutons de soumission avec la classe "save-close-button"
+        document.querySelectorAll('.save-close-button').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Empêche le comportement par défaut du bouton
+                console.log("Bouton cliqué");
+
+                const form = event.target.closest('form');
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: form.method,
+                    body: formData,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Formulaire soumis avec succès");
+                        // Si la requête est réussie, ferme le modal
+                        const modal = form.closest('.modal');
+                        if (modal) {
+                            $(modal).modal('hide');
+                        }
+                        // Ajouter du code ici pour mettre à jour la page sans rechargement complet
+                    } else {
+                        console.error('Erreur lors de la soumission du formulaire.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur réseau:', error);
+                });
+            });
+        });
+    });
+</script>
+-->
 
     </template>
 

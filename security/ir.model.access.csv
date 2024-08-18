@@ -102,5 +102,12 @@ access_crm_importation_financial,access.crm.importation,model_crm_importation,,1
 access_crm_appro_financial,access.crm.appro,model_crm_appro,,1,1,1,1
 access_crm_plan_financial,access.crm.plan,model_crm_plan,,1,1,1,1
 access_crm_financement_financial,access.crm.financement,model_crm_financement,,1,1,1,1
+access_crm_wilaya_financial,access.crm.wilaya,model_crm_wilaya,,1,1,1,1
 
 access_crm_compte_rendu,access.crm.compte.rendu,model_crm_compte_rendu,,1,1,1,1
+
+access_crm_lead,access.crm.lead.portal,model_crm_lead,,1,1,1,1
+access_crm_attachment,access.crm.attachment,model_ir_attachment,,1,1,1,1
+
+access_crm_wizard_calcul,access.crm.wizard.calcul,model_crm_wizard_calcul,,1,1,1,1
+

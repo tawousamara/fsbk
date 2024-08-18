@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="module_crm_portal_category" model="ir.module.category">
+        <field name="name">CRM PORTAL</field>
+    </record>
+    <record id="crm_portal_group_portal" model="res.groups">
+        <field name="name">Utilisateur externe</field>
+        <field name="category_id"
+               ref="module_crm_portal_category"/>
+        <field name="implied_ids"
+               eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+    <record id="crm_portal_group_validator" model="res.groups">
+        <field name="name">Validateur</field>
+        <field name="category_id"
+               ref="module_crm_portal_category"/>
+        <field name="implied_ids"
+               eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+</odoo>
