@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem
+        id="crm_menu_leads_in_conversion"
+        name="Pistes en conversion"
+        parent="crm.crm_menu_root"
+        action="crm_portal.crm_lead_all_leads_in_conversion"
+        groups="crm.group_use_lead"
+        sequence="6"/>
+</odoo>

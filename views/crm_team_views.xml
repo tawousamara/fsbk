@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="crm_portal_crm_team_view_form">
+        <field name="name">crm_portal.crm.team.view.form</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="geographic_area"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="crm_portal_crm_team_view_kanban_dashboard" model="ir.ui.view">
+        <field name="name">crm_portal.crm.team.view.kanban.dashboard.inherit.crm</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="crm.crm_team_view_kanban_dashboard"/>
+        <field name="arch" type="xml">
+            <field name="opportunities_amount" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <xpath expr="//div[@t-if='record.opportunities_count.raw_value']" position="after">
+                <div class="row" t-if="record.opportunities_count.raw_value">
+                    <div class="col-12 d-flex justify-content-between">
+                        <label for="opportunities_amount">PNB espéré: </label>
+                        <field name="opportunities_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    </div>
+                </div>
+                <div class="row" t-if="record.opportunities_count.raw_value">
+                    <div class="col-12 d-flex justify-content-between">
+                        <label for="total_engagement_amount">Total Engagement: </label>
+                        <field name="total_engagement_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

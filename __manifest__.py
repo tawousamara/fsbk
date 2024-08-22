@@ -17,7 +17,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'website', 'crm', 'financial_modeling'],
+    'depends': ['base', 'website', 'crm', 'fsbk_wk', 'financial_modeling'],
 
     # always loaded
     'data': [
@@ -29,6 +29,10 @@
         'views/lead_inherit.xml',
         'views/partner_inherit.xml',
         'views/configuration.xml',
+        'views/crm_team_views.xml',
+        'views/ir_attachment_view.xml',
+        'report/compte_rendu_report.xml',
+        'views/menus.xml',
     ],
     'assets': {
             'web.assets_frontend':[

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="crm_portal_view_document_file_kanban">
+        <field name="name">crm_portal.ir.attachment.kanban</field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="mail.view_document_file_kanban"/>
+        <field name="mode">primary</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <div t-att-title="record.name.raw_value" position="after">
+                <span t-if="record.is_printed.raw_value" class="text-success">Affiché</span>
+                <span t-if="!record.is_printed.raw_value" class="text-danger">Non Affiché</span>
+            </div>
+            <xpath expr="//t[@t-name='kanban-menu']//a[1]" position="before">
+                <a t-attf-href="/web/content/#{record.id.raw_value}" target="_blank" class="dropdown-item">Afficher</a>
+            </xpath>
+        </field>
+    </record>
+</odoo>

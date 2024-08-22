@@ -616,3 +616,4 @@ class Doc(models.Model):
 
     list_doc = fields.Selection(selection=Doc_List)
     lead_id = fields.Many2one('crm.lead', string='')
+    is_printed = fields.Boolean(string='Afficher dans le rapport', default=True)

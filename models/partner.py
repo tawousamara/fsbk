@@ -12,6 +12,9 @@ class Partner(models.Model):
     secteur = fields.Many2one('crm.secteur', string='Secteur d\'activité')
     activity = fields.Many2one('crm.activity', string='Activité en détails')
     rib = fields.Char(string='RIB')
+    geographic_area = fields.Selection([('center', 'Centre'),
+                                        ('east', 'Est'),
+                                        ('west', 'Ouest')], string="Zone géographique", required=True)
 
 
 class User(models.Model):

@@ -5,6 +5,9 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="geographic_area"/>
+            </field>
             <xpath expr="//page[@name='internal_notes']" position="before">
                 <page string="Informations" invisible="1">
                     <group>

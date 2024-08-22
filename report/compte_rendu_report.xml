@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="crm_portal_paperformat_a4" model="report.paperformat">
+        <field name="name">CRM Portal Format</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">35</field>
+        <field name="margin_bottom">32</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_compte_rendu" model="ir.actions.report">
+        <field name="name">Compte rendu de visite</field>
+        <field name="model">crm.compte.rendu</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">crm_portal.report_compte_rendu</field>
+        <field name="report_file">crm_portal.report_compte_rendu</field>
+        <field name="print_report_name">'Compte Rendu De Visite - %s' % (object.lead_id.name)</field>
+        <field name="binding_model_id" ref="model_crm_compte_rendu"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="crm_portal.crm_portal_paperformat_a4"/>
+    </record>
+
+    <template id="report_compte_rendu">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <t t-set="styles">
+                            <style type="text/css">
+                                .text-strong{
+                                font-weight: bold;
+                                }
+                            </style>
+                        </t>
+                        <div class="oe_structure"></div>
+                        <div class="text-center">
+                            <h2>Compte Rendu de visite</h2>
+                        </div>
+                        <br style="border-bottom:1px solid black;"/>
+                        <div>
+                            <p>
+                                <span class="fw-bold">Adresse: <![CDATA[&nbsp;&nbsp;&nbsp;]]></span>
+                                <span t-field="doc.address"/>
+                            </p>
+                            <p>
+                                <span class="fw-bold">Date de visite: <![CDATA[&nbsp;&nbsp;&nbsp;]]></span>
+                                <span t-field="doc.visit_date"/>
+                            </p>
+                        </div>
+                        <br style="border-bottom:1px solid black;"/>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <h4>Résumé</h4>
+                                <p t-field="doc.resume"/>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <table class="table table-sm o_main_table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-start"><span>Participant</span></th>
+                                            <th class="text-center"><span>Signature</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="doc.participant_ids" t-as="participant_id" t-att-class="'h-50 bg-white'">
+                                            <td><span t-esc="participant_id.name"/></td>
+                                            <td><p><![CDATA[&nbsp;&nbsp;&nbsp;]]></p></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8"></div>
+                            <div class="col-4">
+                                <h5>Signature Responsable</h5>
+                            </div>
+                        </div>
+                        <div style="page-break-before:always;">
+                            <table class="table table-sm o_main_table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-start"><span>Photos</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="attachment_ids" t-value="doc.attachment_ids.filtered(lambda a: a.is_printed)"/>
+                                    <tr t-foreach="attachment_ids" t-as="participant_id">
+                                        <td class="text-center"><img t-att-src="image_data_uri(participant_id.datas)" style="width:50%;height:auto" alt="Photos de visites"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row mt-3">
+                                <div class="col-8"></div>
+                                <div class="col-4">
+                                    <h5>Signature Responsable</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
