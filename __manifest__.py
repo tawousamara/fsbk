@@ -21,14 +21,11 @@
 
     # always loaded
     'data': [
-        'data/bank_list.xml',
-        'data/data_list.xml',
         'security/ir.model.access.csv',
         #'views/portal_page.xml',
         'views/request_page.xml',
         'views/lead_inherit.xml',
         'views/partner_inherit.xml',
-        'views/configuration.xml',
         'views/crm_team_views.xml',
         'views/ir_attachment_view.xml',
         'report/compte_rendu_report.xml',

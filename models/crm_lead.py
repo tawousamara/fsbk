@@ -37,6 +37,17 @@ type_name = {
     'eer_credit_saving': 'EER Crédit/épargne'
 }
 
+Doc_List = [
+    ('1', 'Bilans fiscal N, N-1'),
+    ('2', 'Bilan fiscal N-2'),
+    ('3', 'Registre de commerce'),
+    ('4', 'NIF'),
+    ('5', 'NIS'),
+    ('6', 'Statut de création'),
+    ('7', 'Dernier statut modificatif'),
+    ('8', 'Contrat de location / acte de propriété du siège social'),
+    ('9', 'Autorisation de consultation CDR'),
+]
 
 class Lead(models.Model):
     _inherit = 'crm.lead'
@@ -45,15 +56,15 @@ class Lead(models.Model):
     nif = fields.Char(string='NIF')
     nis = fields.Char(string='NIS')
     date_creation = fields.Date(string='Date de création')
-    branch = fields.Many2one('crm.branch', string='Agence')
-    secteur = fields.Many2one('crm.secteur', string='Secteur d\'activité')
-    activity = fields.Many2one('crm.activity', string='Activité en détails')
+    branch = fields.Many2one('fsbk.branch', string='Agence')
+    secteur = fields.Many2one('fsbk.secteur', string='Secteur d\'activité')
+    activity = fields.Many2one('fsbk.activity', string='Activité en détails')
     demande_type = fields.Selection([('0', 'Entrer en relation (nouvelle demande)'),
                                      ('1', 'Renouvellement des lignes')], string='Type de demande')
     product = fields.Selection([('0', 'Exploitation'),
                                 ('1', 'Investissement'),
                                 ('2', 'Leasing')], string='Type de ligne de credit')
-    product_ids = fields.Many2many('crm.product', string='Lignes de credit')
+    product_ids = fields.Many2many('fsbk.product', string='Lignes de credit')
     num_compte = fields.Char(string='N. Compte')
     montant_sollicite = fields.Float(string='Montant sollicité')
     file_tcr = fields.Binary(string='TCR N, N-1')
@@ -87,13 +98,13 @@ class Lead(models.Model):
     nbr_employees = fields.Integer(string='Nombre de salariés')
     date_debut = fields.Date(string='Date de début d`activité')
     has_confrere = fields.Boolean(string='Avez-vous des crédit bancaire auprès des confrères ?')
-    confrere_ids = fields.One2many('crm.confrere', 'lead_id', string='Confrere')
+    confrere_ids = fields.One2many('fsbk.confrere', 'lead_id', string='Confrere')
     has_importation = fields.Boolean(string='Faites-vous de l`importation ?')
-    importation_ids = fields.One2many('crm.importation', 'lead_id')
+    importation_ids = fields.One2many('fsbk.importation', 'lead_id')
     has_appro = fields.Boolean(string='Approvisionnement auprès du marché local')
-    appro_ids = fields.One2many('crm.appro', 'lead_id')
-    plan_ids = fields.One2many('crm.plan', 'lead_id')
-    financement_ids = fields.One2many('crm.financement', 'lead_id')
+    appro_ids = fields.One2many('fsbk.appro', 'lead_id')
+    plan_ids = fields.One2many('fsbk.plan', 'lead_id')
+    financement_ids = fields.One2many('fsbk.financement', 'lead_id')
     document_ids = fields.One2many('ir.attachment', 'lead_id')
 
     garanties = fields.Html(string='Garanties proposées')
@@ -138,6 +149,16 @@ class Lead(models.Model):
     bilan5_id = fields.One2many('fsbk.bilan.cat5', 'lead_id')
     comment_cat5 = fields.Html(string='Commentaire')
 
+    @api.model
+    def create(self, vals):
+        res = super(Lead, self).create(vals)
+        for index, item in Doc_List:
+            self.env['ir.attachment'].create({'lead_id': res.id,
+                                              'list_doc': index,
+                                              'name': item,
+                                              'type': 'binary'
+                                              })
+        return res
 
     @api.depends('type_name')
     def _compute_name(self):
