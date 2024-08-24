@@ -538,7 +538,7 @@ class Confrere(models.Model):
     credit = fields.Many2one('crm.product', string='Type de crédit')
     montant = fields.Float(string='montant')
     condition = fields.Char(string='Condition')
-    date_echeance = fields.Char(string='Échéance ligne')
+    date_echeance = fields.Date(string='Échéance ligne')
     garantie = fields.Char(string='Garanties')
     lead_id = fields.Many2one('crm.lead', string='')
 
@@ -592,12 +592,45 @@ class Financement(models.Model):
     _name = 'crm.financement'
 
     type_fin = fields.Many2one('crm.type.financement', string='Type de financement')
+    line = fields.Many2one('crm.credit', string='Type de financement')
     montant = fields.Float(string='Montant')
     utilisation = fields.Html(string='Utilisation')
     autorisation_actuel = fields.Char(string='Autorisation actuelle')
     validite = fields.Date(string='Validité de la ligne')
     new_plafond = fields.Float(string='Plafond demandé')
     lead_id = fields.Many2one('crm.lead', string='')
+    wizard_id = fields.Many2one('crm.wizard.calcul')
+    hypothese = fields.Selection([('1', '1x'),
+                                      ('2', '1.5x'),
+                                      ('3', '2x'),
+                                      ('4', '2.5x'),
+                                      ('5', '3x'),
+                                      ], default='1', string='Hypothèse')
+
+
+class Wizard(models.Model):
+    _name = 'crm.wizard.calcul'
+
+    lead_id = fields.Many2one('crm.lead', string='Opportunité')
+    line_ids = fields.One2many('crm.financement', 'wizard_id')
+
+    def send(self):
+        for rec in self:
+            somme = 0
+            for line in rec.line_ids:
+                days = 120
+                if line.hypothese == '1':
+                    days = 120
+                elif line.hypothese == '2':
+                    days = days * 1.5
+                elif line.hypothese == '3':
+                    days = days * 2
+                elif line.hypothese == '4':
+                    days = days * 2.5
+                elif line.hypothese == '5':
+                    days = days * 3
+                somme += (line.new_plafond * 0.08 * days) / 360
+            rec.lead_id.expected_revenue = somme
 
 Doc_List = [
     ('1', 'Bilans fiscal N, N-1'),
@@ -610,9 +643,19 @@ Doc_List = [
     ('8', 'Contrat de location / acte de propriété du siège social'),
     ('9', 'Autorisation de consultation CDR'),
 ]
-
 class Doc(models.Model):
     _inherit = 'ir.attachment'
 
     list_doc = fields.Selection(selection=Doc_List)
     lead_id = fields.Many2one('crm.lead', string='')
+
+
+class Wilaya(models.Model):
+    _name = 'crm.wilaya'
+    _rec_name = 'domaine'
+
+    name = fields.Char(string="Code")
+    domaine = fields.Char(string='Nom')
+    description = fields.Char(string='Nom')
+    wilaya_arabe = fields.Char(string='اسم الولاية بالعربية')
+

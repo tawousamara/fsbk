@@ -23,7 +23,9 @@
     'data': [
         'data/bank_list.xml',
         'data/data_list.xml',
+        'data/wilaya_data.xml',
         'security/ir.model.access.csv',
+        'security/security.xml',
         #'views/portal_page.xml',
         'views/request_page.xml',
         'views/lead_inherit.xml',
@@ -34,7 +36,11 @@
             'web.assets_frontend':[
                 'crm_portal/static/src/js/controller_js.js',
             ],
+        'web.assets_backend': [
+            'crm_portal/static/src/css/custom_styles.css',
+        ],
         },
+
     'application': True,
     'license': 'LGPL-3',
 }
